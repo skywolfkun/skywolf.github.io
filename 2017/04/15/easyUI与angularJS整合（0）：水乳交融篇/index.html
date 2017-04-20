@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="记事," />
+  <meta name="keywords" content="前端,easyUI,angularJS," />
 
 
 
@@ -87,16 +87,16 @@
 
 
 
-<meta name="description" content="08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！">
+<meta name="description" content="easyUI问世已经已经有很多年，其提供的框架非常适合做后台管理系统，尤其是ERP、OA等系统，提供了很多组件，虽然easyUI在后台管理系统的前端框架领域里面不是最牛逼的，最牛逼本人觉得应该是ExtJS，但是很无奈的是ExtJS在4.X版本之后就开始收费了，而且ExtJS由于在操作的过程总创建了大量的DOM，尤其是系统模块越多的情况下，DOM的数量会成倍增加，导致最终将用户的浏览器拖的很慢很慢">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第一篇">
-<meta property="og:url" content="http://www.tianshangkun.com/2017/03/28/第一篇/index.html">
+<meta property="og:title" content="easyUI与angularJS整合（0）：水乳交融篇">
+<meta property="og:url" content="http://www.tianshangkun.com/2017/04/15/easyUI与angularJS整合（0）：水乳交融篇/index.html">
 <meta property="og:site_name" content="天狼武士的Blog">
-<meta property="og:description" content="08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！">
-<meta property="og:updated_time" content="2017-03-28T18:59:05.204Z">
+<meta property="og:description" content="easyUI问世已经已经有很多年，其提供的框架非常适合做后台管理系统，尤其是ERP、OA等系统，提供了很多组件，虽然easyUI在后台管理系统的前端框架领域里面不是最牛逼的，最牛逼本人觉得应该是ExtJS，但是很无奈的是ExtJS在4.X版本之后就开始收费了，而且ExtJS由于在操作的过程总创建了大量的DOM，尤其是系统模块越多的情况下，DOM的数量会成倍增加，导致最终将用户的浏览器拖的很慢很慢">
+<meta property="og:updated_time" content="2017-04-15T15:24:12.984Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="第一篇">
-<meta name="twitter:description" content="08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！">
+<meta name="twitter:title" content="easyUI与angularJS整合（0）：水乳交融篇">
+<meta name="twitter:description" content="easyUI问世已经已经有很多年，其提供的框架非常适合做后台管理系统，尤其是ERP、OA等系统，提供了很多组件，虽然easyUI在后台管理系统的前端框架领域里面不是最牛逼的，最牛逼本人觉得应该是ExtJS，但是很无奈的是ExtJS在4.X版本之后就开始收费了，而且ExtJS由于在操作的过程总创建了大量的DOM，尤其是系统模块越多的情况下，DOM的数量会成倍增加，导致最终将用户的浏览器拖的很慢很慢">
 
 
 
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://www.tianshangkun.com/2017/03/28/第一篇/"/>
+  <link rel="canonical" href="http://www.tianshangkun.com/2017/04/15/easyUI与angularJS整合（0）：水乳交融篇/"/>
 
 
 
 
 
-  <title> 第一篇 | 天狼武士的Blog </title>
+  <title> easyUI与angularJS整合（0）：水乳交融篇 | 天狼武士的Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -255,7 +255,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.tianshangkun.com/2017/03/28/第一篇/">
+    <link itemprop="mainEntityOfPage" href="http://www.tianshangkun.com/2017/04/15/easyUI与angularJS整合（0）：水乳交融篇/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="天狼武士">
@@ -276,7 +276,7 @@
             
             
               
-                第一篇
+                easyUI与angularJS整合（0）：水乳交融篇
               
             
           </h1>
@@ -291,8 +291,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-28T17:24:04+08:00">
-                2017-03-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-15T22:56:55+08:00">
+                2017-04-15
               </time>
             
 
@@ -327,7 +327,10 @@
       
 
       
-        <p>　　08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！</p>
+        <p> easyUI问世已经已经有很多年，其提供的框架非常适合做后台管理系统，尤其是ERP、OA等系统，提供了很多组件，虽然easyUI在后台管理系统的前端框架领域里面不是最牛逼的，最牛逼本人觉得应该是ExtJS，但是很无奈的是ExtJS在4.X版本之后就开始收费了，而且ExtJS由于在操作的过程总创建了大量的DOM，尤其是系统模块越多的情况下，DOM的数量会成倍增加，导致最终将用户的浏览器拖的很慢很慢，所以鉴于此，还是easyUI最适合。</p>
+<p> 说到这里很多人不服，近些年出来很多前端框架，不管是页面的新颖程度，还是美观，还是自适应（WEB和手机端的切换）方面都秒杀easyUI，尤其是bootstrap的面世，确实，但是说句实话，ERP和OA之类的企业管理系统还是用easyUI比较方面，而且它的样式能够让大多数非挨踢从业人员接受，尤其是TAB标签和表单的呈现方式（个人或公司的喜好问题，这里不再赘述）。</p>
+<p>　angularJS真的算是一款神奇的框架，自从问世以来博主我就一直在关注并且持续使用中，现在已经出到2代了，但是博主我还是在使用一代，其中唯一的原因就是那个操蛋的TypeScript和他的语法，真的很难让我接受，再说一代的版本提供的东西已经完全可以满足我日常开发的使用了，而且用起来很爽，何必咨询不快。</p>
+<p>　说完easyUI和angularJS，再说说我之前那么多的废话是想干嘛，这就是这个系列的主体，之前一直用bootstrap和angularJS做整合使用，那是因为公司的电商系统及后台用这两个整合已经完全可以胜任了，但是最近公司因业务发展需要，需要做内部的ERP系统，于是我脑海里第一个冒出来的想法就是用easyUI和angularJS来做，这样省时省力，最关键的是我对这两款框架的熟悉程度都很高，所以不二之选就是让easyUI与angularjS水乳交融，在最短的时间内实现公司的ERP前端需求（后端以后再说）！</p>
 
       
     </div>
@@ -357,7 +360,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/记事/" rel="tag"># 记事</a>
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+            <a href="/tags/easyUI/" rel="tag"># easyUI</a>
+          
+            <a href="/tags/angularJS/" rel="tag"># angularJS</a>
           
         </div>
       
@@ -370,14 +377,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/03/28/第一篇/" rel="next" title="第一篇">
+                <i class="fa fa-chevron-left"></i> 第一篇
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/15/easyUI与angularJS整合（0）：水乳交融篇/" rel="prev" title="easyUI与angularJS整合（0）：水乳交融篇">
-                easyUI与angularJS整合（0）：水乳交融篇 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/15/easyUI与angularJS整合（1）：水火不容篇/" rel="prev" title="easyUI与angularJS整合（1）：水火不容篇">
+                easyUI与angularJS整合（1）：水火不容篇 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

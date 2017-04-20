@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="记事," />
+  <meta name="keywords" content="前端,easyUI,angularJS," />
 
 
 
@@ -87,16 +87,16 @@
 
 
 
-<meta name="description" content="08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！">
+<meta name="description" content="上一篇文章已经说了，准备让easyUI与angularJS来一次亲密接触，当我搭建好了easyUI最经典的界面（layout的north、west、center）之后开始引入angularJS，结果他俩就给我来了一个当头一棒，本来好好的layout全屏页面居然直接就缩到了浏览器左上角的一小块，这个问题有点搞笑了，在思考了十分之一炷香之后发现了问题的所在，并且很快修复，其实我也没干别的事情，就是之">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第一篇">
-<meta property="og:url" content="http://www.tianshangkun.com/2017/03/28/第一篇/index.html">
+<meta property="og:title" content="easyUI与angularJS整合（1）：水火不容篇">
+<meta property="og:url" content="http://www.tianshangkun.com/2017/04/15/easyUI与angularJS整合（1）：水火不容篇/index.html">
 <meta property="og:site_name" content="天狼武士的Blog">
-<meta property="og:description" content="08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！">
-<meta property="og:updated_time" content="2017-03-28T18:59:05.204Z">
+<meta property="og:description" content="上一篇文章已经说了，准备让easyUI与angularJS来一次亲密接触，当我搭建好了easyUI最经典的界面（layout的north、west、center）之后开始引入angularJS，结果他俩就给我来了一个当头一棒，本来好好的layout全屏页面居然直接就缩到了浏览器左上角的一小块，这个问题有点搞笑了，在思考了十分之一炷香之后发现了问题的所在，并且很快修复，其实我也没干别的事情，就是之">
+<meta property="og:updated_time" content="2017-04-20T06:40:52.956Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="第一篇">
-<meta name="twitter:description" content="08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！">
+<meta name="twitter:title" content="easyUI与angularJS整合（1）：水火不容篇">
+<meta name="twitter:description" content="上一篇文章已经说了，准备让easyUI与angularJS来一次亲密接触，当我搭建好了easyUI最经典的界面（layout的north、west、center）之后开始引入angularJS，结果他俩就给我来了一个当头一棒，本来好好的layout全屏页面居然直接就缩到了浏览器左上角的一小块，这个问题有点搞笑了，在思考了十分之一炷香之后发现了问题的所在，并且很快修复，其实我也没干别的事情，就是之">
 
 
 
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://www.tianshangkun.com/2017/03/28/第一篇/"/>
+  <link rel="canonical" href="http://www.tianshangkun.com/2017/04/15/easyUI与angularJS整合（1）：水火不容篇/"/>
 
 
 
 
 
-  <title> 第一篇 | 天狼武士的Blog </title>
+  <title> easyUI与angularJS整合（1）：水火不容篇 | 天狼武士的Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -255,7 +255,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.tianshangkun.com/2017/03/28/第一篇/">
+    <link itemprop="mainEntityOfPage" href="http://www.tianshangkun.com/2017/04/15/easyUI与angularJS整合（1）：水火不容篇/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="天狼武士">
@@ -276,7 +276,7 @@
             
             
               
-                第一篇
+                easyUI与angularJS整合（1）：水火不容篇
               
             
           </h1>
@@ -291,8 +291,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-28T17:24:04+08:00">
-                2017-03-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-15T23:31:13+08:00">
+                2017-04-15
               </time>
             
 
@@ -327,7 +327,25 @@
       
 
       
-        <p>　　08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！</p>
+        <p>　上一篇文章已经说了，准备让easyUI与angularJS来一次亲密接触，当我搭建好了easyUI最经典的界面（layout的north、west、center）之后开始引入angularJS，结果他俩就给我来了一个当头一棒，本来好好的layout全屏页面居然直接就缩到了浏览器左上角的一小块，这个问题有点搞笑了，在思考了十分之一炷香之后发现了问题的所在，并且很快修复，其实我也没干别的事情，就是之前把jquery和easyUI的JS引用放在了angularJS的前面，十分之一炷香之后果断把angularJS的引用放在了jquery和easyUI的前面，在我一句呵呵哒之后继续下面的工作。</p>
+<p>　下面的工作就是west加载功能列表，center放tab页签，加载功能列表点击后的具体页面，于是问题又出现了，tabs.add中href是远程的模板地址代码如下：</p>
+<pre><code>$(&apos;#mainTab&apos;).tabs(&apos;add&apos;,{
+    title:menu.name,
+    href:menu.url,
+    closable:true,
+    cache:false,
+    id:&apos;mainTab-&apos;+menu.id
+});
+</code></pre><p>　而我的每个功能模板使用一个angularJS的controller进行控制，我们都知道，tabs创建新的tab的时候如果传href参数远程异步加载的话angularJS是无法渲染的，也就是说当页面加载成功之后，没有被angualrJS渲染，所以angularJS也就无法控制该页面，索性easyUI的tabs组件有onLoad事件，可以在异步加载页面成功后回调该事件，参数是当前被加载的TAB，这就好办了，tabs的每一个tab都是一个panel组件，直接使用该tab.panel(‘body’).html()就可获取当前tab的HTML内容，然后使用angularJS提供的$compile方法对该页面进行渲染，代码如下：</p>
+<pre><code>$(&apos;#mainTab&apos;).tabs({
+    onLoad:function(ele,me){
+        var obj=ele.panel(&apos;body&apos;).html();
+        obj=$compile(obj)($scope);
+        $scope.$apply();
+    }
+});
+</code></pre><p>　这种方式可以保证tab被异步加载后执行部分angularJS渲染，但是奇怪的是页面的尖括号双向绑定无法使用，只能正常使用ng-开头的一些指令，同时表单如果使用了easyUI的表单的话是无法使用ng-model的，原因是easyUI对表单渲染的方式是保留原表单的内容并重新创建新的easyUI表单到页面上，所以在表现上来看并不是ng-model渲染不成功，只是你页面上看到的表单内容并不是你代码里写的，不过鉴于easyUI有自己的表单控制素有用不用angularJS的双向绑定也无所谓，可以用另一种方式去控制model。</p>
+<p>　综上，easyUI和angularjS的混搭使用，angularJS只能当做控制层来使用，表现层级model绑定最好别交给easyUI来使用，既然是两种不同的框架那就只能取其交际使用方为上策。</p>
 
       
     </div>
@@ -357,7 +375,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/记事/" rel="tag"># 记事</a>
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+            <a href="/tags/easyUI/" rel="tag"># easyUI</a>
+          
+            <a href="/tags/angularJS/" rel="tag"># angularJS</a>
           
         </div>
       
@@ -370,14 +392,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/04/15/easyUI与angularJS整合（0）：水乳交融篇/" rel="next" title="easyUI与angularJS整合（0）：水乳交融篇">
+                <i class="fa fa-chevron-left"></i> easyUI与angularJS整合（0）：水乳交融篇
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/15/easyUI与angularJS整合（0）：水乳交融篇/" rel="prev" title="easyUI与angularJS整合（0）：水乳交融篇">
-                easyUI与angularJS整合（0）：水乳交融篇 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/20/easyUI与angularJS整合（2）：表单提交篇/" rel="prev" title="easyUI与angularJS整合（2）：表单提交篇">
+                easyUI与angularJS整合（2）：表单提交篇 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
