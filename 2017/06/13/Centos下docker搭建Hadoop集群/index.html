@@ -1,0 +1,928 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop,docker,大数据集群,docker搭建Hadoop集群,Centos下docker搭建Hadoop集群" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/wolf.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="随着业务发展需要，数据量的逐步提升，需要用到Hadoop来处理一些数据，所以搭建一个Hadoop集群，搭建Hadoop集群需要多台主机，但是由于资源有限，所以刚好可以利用近些年比较火的docker来搭建，用docker搭建也有一个好处，就是一次构建多节点重复利用。在上服务器之前，现在自己的电脑里用虚拟机模拟一下，顺便可以做个记录，把可能遇到的坑先趟过去（谁叫我笔记本16G内存呢）。
+第一步、安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Centos下docker搭建Hadoop集群">
+<meta property="og:url" content="http://www.tianshangkun.com/2017/06/13/Centos下docker搭建Hadoop集群/index.html">
+<meta property="og:site_name" content="天狼武士的Blog">
+<meta property="og:description" content="随着业务发展需要，数据量的逐步提升，需要用到Hadoop来处理一些数据，所以搭建一个Hadoop集群，搭建Hadoop集群需要多台主机，但是由于资源有限，所以刚好可以利用近些年比较火的docker来搭建，用docker搭建也有一个好处，就是一次构建多节点重复利用。在上服务器之前，现在自己的电脑里用虚拟机模拟一下，顺便可以做个记录，把可能遇到的坑先趟过去（谁叫我笔记本16G内存呢）。
+第一步、安装">
+<meta property="og:image" content="http://www.tianshangkun.com/images/hadoop.png">
+<meta property="og:updated_time" content="2017-06-13T16:40:46.944Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Centos下docker搭建Hadoop集群">
+<meta name="twitter:description" content="随着业务发展需要，数据量的逐步提升，需要用到Hadoop来处理一些数据，所以搭建一个Hadoop集群，搭建Hadoop集群需要多台主机，但是由于资源有限，所以刚好可以利用近些年比较火的docker来搭建，用docker搭建也有一个好处，就是一次构建多节点重复利用。在上服务器之前，现在自己的电脑里用虚拟机模拟一下，顺便可以做个记录，把可能遇到的坑先趟过去（谁叫我笔记本16G内存呢）。
+第一步、安装">
+<meta name="twitter:image" content="http://www.tianshangkun.com/images/hadoop.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.tianshangkun.com/2017/06/13/Centos下docker搭建Hadoop集群/"/>
+
+
+
+
+
+  <title> Centos下docker搭建Hadoop集群 | 天狼武士的Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261718062&web_id=1261718062" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">天狼武士的Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">世界太大我想敲两行代码</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.tianshangkun.com/2017/06/13/Centos下docker搭建Hadoop集群/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="天狼武士">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天狼武士的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Centos下docker搭建Hadoop集群
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-13T15:56:26+08:00">
+                2017-06-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/06/13/Centos下docker搭建Hadoop集群/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>　随着业务发展需要，数据量的逐步提升，需要用到Hadoop来处理一些数据，所以搭建一个Hadoop集群，搭建Hadoop集群需要多台主机，但是由于资源有限，所以刚好可以利用近些年比较火的docker来搭建，用docker搭建也有一个好处，就是一次构建多节点重复利用。在上服务器之前，现在自己的电脑里用虚拟机模拟一下，顺便可以做个记录，把可能遇到的坑先趟过去（谁叫我笔记本16G内存呢）。</p>
+<h2 id="第一步、安装Centos，部署docker"><a href="#第一步、安装Centos，部署docker" class="headerlink" title="第一步、安装Centos，部署docker"></a>第一步、安装Centos，部署docker</h2><p>　先从Centos官网载一个最小版的Centos7镜像，用VMWare安装，由于是最小版镜像所以装完之后有很多组件需要手动yum安装，（什么？为什么不装完全版的？我要是有几台刀片我也装啊！）</p>
+<p>　完成之后的第一步当然是换yum源：</p>
+<pre><code>mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+</code></pre><p>　安装完之后记得 yum makecache一下。由于是Minimal版，连最基本的网络工具都没有，所以全都开始手动安装：</p>
+<pre><code>yum install -y wget
+yum install -y gcc
+</code></pre><p>　安装基本工具之后就是安装docker,docker安装很简单直接yum install -y docker，docker基本配置和使用就不再赘述了，docker的镜像本身下载很慢的，所以这里我用的是daocloud的加速器，那下载速度杠杠的！但是不知道daocloud最近怎么了，curl生成的加速器是有问题的，配置了之后docker启动不了，看了日志发现是他们修改的etc/docker/daemon.json有问题，里面多了一个逗号，把逗号去了就行。 接下来就是启动docker</p>
+<pre><code>systemctl start docker
+</code></pre><p>　没毛病，直接启动成功，接卸来下载镜像</p>
+<pre><code>docker pull daocloud.io/centos:6
+</code></pre><p>　为什么不用centos7而是用6，这个问题就比较搞笑了，刚开始用的就是7的镜像但是有个很严重的BUG就是systemd无法使用，也就是说容器内的服务是无法用systemctl管理的，网上也有解决方法，但是都不好使！所以退而求其次用centos6就行。镜像拉取完成之后启动镜像：</p>
+<pre><code>docker run -it -h master --name master daocloud.io/library/centos:6 /bin/bash
+</code></pre><p>　ok~!镜像启动成功，控制台会直接进入镜像内的控制台，如果想退回宿主机控制台直接ctrl+p ctrl+q可以从容器返回宿主机，再想回来直接docker attach 【容器名称或ID】。</p>
+<h2 id="第二步、制作Hadoop镜像"><a href="#第二步、制作Hadoop镜像" class="headerlink" title="第二步、制作Hadoop镜像"></a>第二步、制作Hadoop镜像</h2><p>　进入容器控制台，开始搭建Hadoop，在搭建之前一样要先把基础工具给装了，Hadoop是JAVA写的所以JDK先给装上：</p>
+<pre><code>wget --no-check-certificate --no-cookies --header &quot;Cookie: oraclelicense=accept-securebackup-cookie&quot; http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz
+
+mkdir /usr/java
+
+tar -zxvf jdk-8u131-linux-x64.tar.gz -C /usr/java
+</code></pre><p>　修改环境变量</p>
+<pre><code>vim /etc/profile
+#在最下方加入JAVA配置
+export PATH USER LOGNAME MAIL HOSTNAME HISTSIZE HISTCONTROL
+export JAVA_HOME=/usr/java/jdk1.8.0_131
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+#source一下
+source /etc/profile
+</code></pre><p>　安装gcc,vim,lrzsz和ssh</p>
+<pre><code>yum install -y gcc
+yum install -y vim
+yum install -y lrzsz
+yum -y install openssh-server
+yum -y install openssh-clients
+</code></pre><p>　配置ssh免密登录</p>
+<pre><code>ssh-keygen -t rsa -P &apos;&apos; -f ~/.ssh/id_rsa
+cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys
+</code></pre><p>　关闭烦人sellinux:</p>
+<pre><code>setenforce 0
+</code></pre><p>　启动ssh</p>
+<pre><code>service sshd start
+</code></pre><p>　测试一下</p>
+<pre><code>ssh master
+</code></pre><p>　如果没什么问题就代表一些准备就绪。</p>
+<p>　完成之后开始下载Hadoop镜像：</p>
+<pre><code>wget https://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/hadoop-2.8.0/hadoop-2.8.0.tar.gz
+mkdir /usr/local/hadoop
+tar -zxvf hadoop-2.8.0.tar.gz -C /usr/local/hadoop
+</code></pre><p>　配置环境变量</p>
+<pre><code>vim /etc/profile
+#在最下方加入Hadoop配置
+export HADOOP_HOME=/usr/local/hadoop/hadoop-2.8.0
+export PATH=$PATH:$HADOOP_HOME/bin
+</code></pre><p>　修改Hadoop的配置文件，进入Hadoop的目录</p>
+<pre><code>cd /usr/local/hadoop/hadoop-2.8.0/etc/hadoop/
+</code></pre><p>　在hadoop-env.sh 和 yarn-env.sh 在开头添加JAVA环境变量JAVA_HOME</p>
+<p>　修改hadoop core-site.xml文件</p>
+<pre><code>&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;fs.defaultFS&lt;/name&gt;
+        &lt;value&gt;hdfs://master:9000&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;io.file.buffer.size&lt;/name&gt;
+        &lt;value&gt;131702&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
+        &lt;value&gt;file:/home/tsk/hadoop-2.8.0/tmp&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre><p>　修改hdfs-site.xml文件</p>
+<pre><code>&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
+        &lt;value&gt;file:/home/tsk/hadoop-2.8.0/dfs/name&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
+        &lt;value&gt;file:/home/tsk/hadoop-2.8.0/dfs/data&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.replication&lt;/name&gt;
+        &lt;value&gt;2&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;
+        &lt;value&gt;master:9001&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.webhdfs.enabled&lt;/name&gt;
+        &lt;value&gt;true&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre><p>　修改mapred-site.xml文件</p>
+<pre><code>&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+        &lt;value&gt;yarn&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;
+        &lt;value&gt;master:10020&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;
+        &lt;value&gt;master:19888&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre><p>　修改yarn-site.xml</p>
+<pre><code>&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+        &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.nodemanager.auxservices.mapreduce.shuffle.class&lt;/name&gt;
+        &lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;
+        &lt;value&gt;master:8032&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.scheduler.address&lt;/name&gt;
+        &lt;value&gt;master:8030&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.resource-tracker.address&lt;/name&gt;
+        &lt;value&gt;master:8031&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.admin.address&lt;/name&gt;
+        &lt;value&gt;master:8033&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.webapp.address&lt;/name&gt;
+        &lt;value&gt;master:8088&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.nodemanager.resource.memory-mb&lt;/name&gt;
+        &lt;value&gt;1024&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre><p>　由于我准备配置三个salve节点所以在slaves文件中添加</p>
+<pre><code>slave1
+slave2
+slave3
+</code></pre><p>　完成之后尝试一下</p>
+<pre><code>ldd /usr/local/hadoop/hadoop-2.8.0/lib/native/libhadoop.so.1.0.0
+</code></pre><p>　这时提示GLIBC_2.14 required，centos6的源最高到2.12，这里需要2.14，所以只能手动make安装</p>
+<pre><code>wget http://ftp.gnu.org/gnu/glibc/glibc-2.14.tar.gz
+tar zxvf glibc-2.14.tar.gz
+cd glibc-2.14
+mkdir build
+cd build
+../configure --prefix=/usr/local/glibc-2.14
+make
+make install
+ln -sf /usr/local/glibc-2.14/lib/libc-2.14.so /lib64/libc.so.6
+</code></pre><p>　完成之后再ldd就没有问题了！接下来就是构建上面做的所有操作，将其变成一个镜像以便复用，先Ctrl+p和Ctrl+q返回宿主机控制台然后输入命令：</p>
+<pre><code>docker commit master tsk/hadoop
+</code></pre><p>　等一会之后会发现镜像只做完成docker images一下就能看到自己只做的镜像了。</p>
+<h2 id="第三步、启动镜像"><a href="#第三步、启动镜像" class="headerlink" title="第三步、启动镜像"></a>第三步、启动镜像</h2><p>　先配置docker的网络，给每台机器配置host</p>
+<pre><code>docker inspect --format=&apos;{{.NetworkSettings.IPAddress}}&apos; master
+</code></pre><p>　接下来逐个启动镜像：</p>
+<pre><code>docker stop master
+docker rm master
+docker run -it -p 50070:50070 -p 19888:19888 -p 8088:8088 -h master --name master tsk/hadoop /bin/bash
+docker run -it -h slave1 --name slave1 tsk/hadoop /bin/bash
+docker run -it -h slave2 --name slave2 tsk/hadoop /bin/bash
+docker run -it -h slave3 --name slave3 tsk/hadoop /bin/bash
+</code></pre><p>　然后attach到每个节点上面source一下配置hosts，启动sshd，完成之后开始准备启动Hadoop</p>
+<pre><code>hadoop namenode -format
+/usr/local/hadoop/hadoop-2.8.0/sbin/start-all.sh
+</code></pre><p>　最后要做的事情就是等待<del>~等待</del><del>~等待</del>~~~~！直到全部启动完成！完成之后用浏览器访问虚拟机IP地址:50070，如果没有任何问题的话你就可以看到如下画面，至此Hadoop集群搭建成功！</p>
+<p><img src="/images/hadoop.png"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
+            <a href="/tags/hadoop/" rel="tag"># hadoop</a>
+          
+            <a href="/tags/大数据/" rel="tag"># 大数据</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/04/获取我附近的商店方法-二-GeoHash算法/" rel="next" title="获取我附近的商店方法(二):GeoHash算法">
+                <i class="fa fa-chevron-left"></i> 获取我附近的商店方法(二):GeoHash算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/1.jpg"
+               alt="天狼武士" />
+          <p class="site-author-name" itemprop="name">天狼武士</p>
+           
+              <p class="site-description motion-element" itemprop="description">天狼武士的个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1171031951" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一步、安装Centos，部署docker"><span class="nav-number">1.</span> <span class="nav-text">第一步、安装Centos，部署docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二步、制作Hadoop镜像"><span class="nav-number">2.</span> <span class="nav-text">第二步、制作Hadoop镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三步、启动镜像"><span class="nav-number">3.</span> <span class="nav-text">第三步、启动镜像</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">天狼武士</span>
+</div>
+
+
+<div class="powered-by">
+  <a class="theme-link" href="http://www.tianshangkun.com">天狼武士</a> 专属博客
+</div>
+
+<div class="theme-info">
+  苏ICP备 17021575
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "a9da684457284c92a0a08327257c0a71",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

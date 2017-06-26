@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="记事," />
+  <meta name="keywords" content="java,算法,电商," />
 
 
 
@@ -87,16 +87,19 @@
 
 
 
-<meta name="description" content="08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！">
+<meta name="description" content="现在所有的电商类APP都会有根据我的位置获取我附近的商户、离我最近的商户的筛选排序功能，那么这个功能是怎么实现的呢？显然单纯的数据库查询很难做到，一般数据库中只会存储商户的经度和纬度的坐标，那么根据这两个坐标获，再根据用户手机端定位到的经纬度坐标获经过计算得出离我最近的商户，这种实现方式可以有两种：第一种根据坐标及需要的距离计算出半径获取；第二种是通过geoHash算法进行转换。
+　咱们并不讨论">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第一篇">
-<meta property="og:url" content="http://www.tianshangkun.com/2017/03/28/第一篇/index.html">
+<meta property="og:title" content="获取我附近的商店方法(一):根据坐标计算半径">
+<meta property="og:url" content="http://www.tianshangkun.com/2017/05/04/获取我附近的商店方法-一-根据坐标计算半径/index.html">
 <meta property="og:site_name" content="天狼武士的Blog">
-<meta property="og:description" content="08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！">
-<meta property="og:updated_time" content="2017-03-28T18:59:05.204Z">
+<meta property="og:description" content="现在所有的电商类APP都会有根据我的位置获取我附近的商户、离我最近的商户的筛选排序功能，那么这个功能是怎么实现的呢？显然单纯的数据库查询很难做到，一般数据库中只会存储商户的经度和纬度的坐标，那么根据这两个坐标获，再根据用户手机端定位到的经纬度坐标获经过计算得出离我最近的商户，这种实现方式可以有两种：第一种根据坐标及需要的距离计算出半径获取；第二种是通过geoHash算法进行转换。
+　咱们并不讨论">
+<meta property="og:updated_time" content="2017-05-04T09:01:49.599Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="第一篇">
-<meta name="twitter:description" content="08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！">
+<meta name="twitter:title" content="获取我附近的商店方法(一):根据坐标计算半径">
+<meta name="twitter:description" content="现在所有的电商类APP都会有根据我的位置获取我附近的商户、离我最近的商户的筛选排序功能，那么这个功能是怎么实现的呢？显然单纯的数据库查询很难做到，一般数据库中只会存储商户的经度和纬度的坐标，那么根据这两个坐标获，再根据用户手机端定位到的经纬度坐标获经过计算得出离我最近的商户，这种实现方式可以有两种：第一种根据坐标及需要的距离计算出半径获取；第二种是通过geoHash算法进行转换。
+　咱们并不讨论">
 
 
 
@@ -124,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://www.tianshangkun.com/2017/03/28/第一篇/"/>
+  <link rel="canonical" href="http://www.tianshangkun.com/2017/05/04/获取我附近的商店方法-一-根据坐标计算半径/"/>
 
 
 
 
 
-  <title> 第一篇 | 天狼武士的Blog </title>
+  <title> 获取我附近的商店方法(一):根据坐标计算半径 | 天狼武士的Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -255,7 +258,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.tianshangkun.com/2017/03/28/第一篇/">
+    <link itemprop="mainEntityOfPage" href="http://www.tianshangkun.com/2017/05/04/获取我附近的商店方法-一-根据坐标计算半径/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="天狼武士">
@@ -276,7 +279,7 @@
             
             
               
-                第一篇
+                获取我附近的商店方法(一):根据坐标计算半径
               
             
           </h1>
@@ -291,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-28T17:24:04+08:00">
-                2017-03-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-04T16:30:34+08:00">
+                2017-05-04
               </time>
             
 
@@ -310,7 +313,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/03/28/第一篇/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2017/05/04/获取我附近的商店方法-一-根据坐标计算半径/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -337,8 +340,121 @@
       
 
       
-        <p>　　08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！</p>
+        <p>　现在所有的电商类APP都会有根据我的位置获取我附近的商户、离我最近的商户的筛选排序功能，那么这个功能是怎么实现的呢？显然单纯的数据库查询很难做到，一般数据库中只会存储商户的经度和纬度的坐标，那么根据这两个坐标获，再根据用户手机端定位到的经纬度坐标获经过计算得出离我最近的商户，这种实现方式可以有两种：第一种根据坐标及需要的距离计算出半径获取；第二种是通过geoHash算法进行转换。</p>
+<p>　咱们并不讨论这两种方式的优缺点及具体的可行性问题，但从理论上说明一下两种方式的实现过程，这篇文章先说一下根据半径获取的方式：</p>
+<p>　假定我们数据库中每个商户都有一个自己的地理位置坐标（经度：longitude；纬度：latitude），这两个参数可以精确到一个点，然后以这个点为圆心再根据需要的距离计算出最大的半径，代码如下：</p>
+<pre><code>/**
+* 地图坐标BEAN
+* 
+* @author sk.tian
+* 
+*/
+public class LocationBean {
+    private Double longitude; // 经度
+    private Double latitude; // 纬度
+    private int raidus; // 半径
+    private Double minLat; // 最小纬度
+    private Double maxLat; // 最大纬度
+    private Double minLng; // 最小经度
+    private Double maxLng; // 最大经度
 
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public int getRaidus() {
+        return raidus;
+    }
+
+    public void setRaidus(int raidus) {
+        this.raidus = raidus;
+    }
+
+    public Double getMinLat() {
+        return minLat;
+    }
+
+    public void setMinLat(Double minLat) {
+        this.minLat = minLat;
+    }
+
+    public Double getMaxLat() {
+        return maxLat;
+    }
+
+    public void setMaxLat(Double maxLat) {
+        this.maxLat = maxLat;
+    }
+
+    public Double getMinLng() {
+        return minLng;
+    }
+
+    public void setMinLng(Double minLng) {
+        this.minLng = minLng;
+    }
+
+    public Double getMaxLng() {
+        return maxLng;
+    }
+
+    public void setMaxLng(Double maxLng) {
+        this.maxLng = maxLng;
+    }
+
+}
+
+/**
+ * 根据坐标计算半径多少米范围之内的最大、最小经度和纬度
+ * 
+ * @param longitude
+ *            经度
+ * @param latitude
+ *            纬度
+ * @param raidus
+ *            半径（米）
+ * @return
+ */
+public static LocationBean loadCirle(Double longitude, Double latitude,
+        int raidus) {
+    LocationBean bean = new LocationBean();
+    bean.setLongitude(longitude);
+    bean.setLatitude(latitude);
+    bean.setRaidus(raidus);
+    Double degree = (24901 * 1609) / 360.0;
+    double raidusMile = raidus;
+
+    Double dpmLat = 1 / degree;
+    Double radiusLat = dpmLat * raidusMile;
+    Double minLat = latitude - radiusLat;
+    Double maxLat = latitude + radiusLat;
+
+    Double mpdLng = degree * Math.cos(latitude * (Math.PI / 180));
+    Double dpmLng = 1 / mpdLng;
+    Double radiusLng = dpmLng * raidusMile;
+    Double minLng = longitude - radiusLng;
+    Double maxLng = longitude + radiusLng;
+    bean.setMaxLat(maxLat);
+    bean.setMaxLng(maxLng);
+    bean.setMinLat(minLat);
+    bean.setMinLng(minLng);
+    return bean;
+}
+</code></pre><p>  这个loadCirle方法就是计算出最大和最小经纬度的，将结果封装近LocationBean中，获取到locationBean之后，数据库查询的时候最大和最小的经纬度查询即可：</p>
+<pre><code>select * from shops where latitude &gt;=#{minLat} and latitude&lt;=#{maxLat} and longitude&gt;=#{minLng} and longitude&lt;=#{maxLng}
+</code></pre>
       
     </div>
 
@@ -367,7 +483,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/记事/" rel="tag"># 记事</a>
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/电商/" rel="tag"># 电商</a>
           
         </div>
       
@@ -380,14 +500,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/04/26/转-奥瑞旅行是什么鬼？/" rel="next" title="转:奥瑞旅行是什么鬼？">
+                <i class="fa fa-chevron-left"></i> 转:奥瑞旅行是什么鬼？
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/15/easyUI与angularJS整合（0）：水乳交融篇/" rel="prev" title="easyUI与angularJS整合（0）：水乳交融篇">
-                easyUI与angularJS整合（0）：水乳交融篇 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/04/获取我附近的商店方法-二-GeoHash算法/" rel="prev" title="获取我附近的商店方法(二):GeoHash算法">
+                获取我附近的商店方法(二):GeoHash算法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

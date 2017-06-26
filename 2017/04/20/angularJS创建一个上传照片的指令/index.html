@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="记事," />
+  <meta name="keywords" content="前端,angularJS," />
 
 
 
@@ -87,16 +87,16 @@
 
 
 
-<meta name="description" content="08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！">
+<meta name="description" content="angularJS在近几年发展火热，也无疑是目前市面上来说比较牛逼且成熟的框架，在单页面前端应用当中应该可以说是王者，双向绑定省去了大量的前端代码，控制器在其作用于方面的控制也是相当腻害，今天我们要说的是另外一个比较牛逼的功能，就是angularJS的指令directive，之前没听说过angularJS指令的朋友请自行度娘，随便搜一条文章都比我说的详细，这次用一个我自己写的图片上传的指令来做为">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第一篇">
-<meta property="og:url" content="http://www.tianshangkun.com/2017/03/28/第一篇/index.html">
+<meta property="og:title" content="angularJS创建一个上传照片的指令">
+<meta property="og:url" content="http://www.tianshangkun.com/2017/04/20/angularJS创建一个上传照片的指令/index.html">
 <meta property="og:site_name" content="天狼武士的Blog">
-<meta property="og:description" content="08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！">
-<meta property="og:updated_time" content="2017-03-28T18:59:05.204Z">
+<meta property="og:description" content="angularJS在近几年发展火热，也无疑是目前市面上来说比较牛逼且成熟的框架，在单页面前端应用当中应该可以说是王者，双向绑定省去了大量的前端代码，控制器在其作用于方面的控制也是相当腻害，今天我们要说的是另外一个比较牛逼的功能，就是angularJS的指令directive，之前没听说过angularJS指令的朋友请自行度娘，随便搜一条文章都比我说的详细，这次用一个我自己写的图片上传的指令来做为">
+<meta property="og:updated_time" content="2017-04-20T12:14:00.843Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="第一篇">
-<meta name="twitter:description" content="08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！">
+<meta name="twitter:title" content="angularJS创建一个上传照片的指令">
+<meta name="twitter:description" content="angularJS在近几年发展火热，也无疑是目前市面上来说比较牛逼且成熟的框架，在单页面前端应用当中应该可以说是王者，双向绑定省去了大量的前端代码，控制器在其作用于方面的控制也是相当腻害，今天我们要说的是另外一个比较牛逼的功能，就是angularJS的指令directive，之前没听说过angularJS指令的朋友请自行度娘，随便搜一条文章都比我说的详细，这次用一个我自己写的图片上传的指令来做为">
 
 
 
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://www.tianshangkun.com/2017/03/28/第一篇/"/>
+  <link rel="canonical" href="http://www.tianshangkun.com/2017/04/20/angularJS创建一个上传照片的指令/"/>
 
 
 
 
 
-  <title> 第一篇 | 天狼武士的Blog </title>
+  <title> angularJS创建一个上传照片的指令 | 天狼武士的Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -255,7 +255,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.tianshangkun.com/2017/03/28/第一篇/">
+    <link itemprop="mainEntityOfPage" href="http://www.tianshangkun.com/2017/04/20/angularJS创建一个上传照片的指令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="天狼武士">
@@ -276,7 +276,7 @@
             
             
               
-                第一篇
+                angularJS创建一个上传照片的指令
               
             
           </h1>
@@ -291,8 +291,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-28T17:24:04+08:00">
-                2017-03-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-20T19:48:33+08:00">
+                2017-04-20
               </time>
             
 
@@ -310,7 +310,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/03/28/第一篇/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2017/04/20/angularJS创建一个上传照片的指令/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -337,7 +337,49 @@
       
 
       
-        <p>　　08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！</p>
+        <p>　angularJS在近几年发展火热，也无疑是目前市面上来说比较牛逼且成熟的框架，在单页面前端应用当中应该可以说是王者，双向绑定省去了大量的前端代码，控制器在其作用于方面的控制也是相当腻害，今天我们要说的是另外一个比较牛逼的功能，就是angularJS的指令directive，之前没听说过angularJS指令的朋友请自行度娘，随便搜一条文章都比我说的详细，这次用一个我自己写的图片上传的指令来做为案例，详细说明一下实际操作过程中的指令。</p>
+<p>　之前我们前端的附件上传用的是jqueryFileUpload，每次使用都要在页面把样式画好，然后再控制器中初始化upload组件，上传成功或失败时候还要做相应的处理，这样每次写一个附件上传都要写代码去处理，这样很重复劳动，所以就想利用angularJS的指令把重复劳动的环节给去掉，具体代码如下：</p>
+<pre><code>.directive(&apos;imageUpload&apos;,[&apos;Constants&apos;,function(Constants){
+return {
+    restrict: &apos;E&apos;,
+    scope: {
+        scopeModel:&apos;=&apos;,
+        title:&apos;@&apos;
+    },
+    template : &apos;&lt;fieldset&gt;&apos;
+            +&apos;&lt;legend&gt;{{title}}&lt;span class=&quot;fileinput-button&quot;&gt;&lt;span&gt;重新上传&lt;/span&gt;&apos;
+            +&apos;&lt;input type=&quot;file&quot; name=&quot;file&quot;&gt;&lt;/span&gt;&lt;/legend&gt;&apos;
+            + &apos;&lt;span class=&quot;profile-picture&quot;&gt;&apos;
+            + &apos;&lt;img class=&quot;img-responsive&quot; alt=&quot;{{title}}&quot; ng-src=&quot;{{loadImg(scopeModel)}}&quot; style=&quot;display: block;&quot;/&gt;&apos;
+            + &apos;&lt;/fieldset&gt;&apos;,
+    link : function(scope, element, attrs) {
+
+        $(element).fileupload({
+            url: &apos;file/upload&apos;,
+            dataType: &apos;json&apos;,
+            done: function(e, data) {
+                var res = data.result;
+                if(res.success){
+                    scope.scopeModel=res.data.fileKey;
+                    scope.$apply();
+                }
+            }
+        });
+        scope.loadImg=function(key){
+            if(undefined==scope.scopeModel || null==scope.scopeModel || scope.scopeModel===&apos;&apos;){
+                return $.ctx+&apos;/images/noImage.jpg&apos;;
+            }
+            if(scope.scopeModel.indexOf(&apos;http://&apos;)&gt;-1){
+                return scope.scopeModel;
+            }
+            return $.ctx+&apos;/file/getFile?fileKey=&apos;+scope.scopeModel;
+        }
+    }
+};
+</code></pre><p>}]);</p>
+<p>　指令完成之后在前端页面上只需要写一行代码就可以完成照片的加载（如果是修改页面需要加载出原照片）和上传功能，其中scopeModel是用来双向绑定的，在调用的时候把controller中的model传递进去之后可以实现指令和controller之间的双向绑定，代码中的template为element模板，可以根据具体的样式自己更换（我用的是bootstrap），使用如下：</p>
+<pre><code>&lt;image-upload scope-model=&quot;imagePath&quot; title=&quot;照片上传&quot;&gt;&lt;/image-upload&gt;
+</code></pre><p>　PS：代码为我实际业务代码中截取和删减过后的精简版。</p>
 
       
     </div>
@@ -367,7 +409,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/记事/" rel="tag"># 记事</a>
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+            <a href="/tags/angularJS/" rel="tag"># angularJS</a>
           
         </div>
       
@@ -380,14 +424,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/04/20/easyUI与angularJS整合（2）：表单提交篇/" rel="next" title="easyUI与angularJS整合（2）：表单提交篇">
+                <i class="fa fa-chevron-left"></i> easyUI与angularJS整合（2）：表单提交篇
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/15/easyUI与angularJS整合（0）：水乳交融篇/" rel="prev" title="easyUI与angularJS整合（0）：水乳交融篇">
-                easyUI与angularJS整合（0）：水乳交融篇 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/26/转-奥瑞旅行是什么鬼？/" rel="prev" title="转:奥瑞旅行是什么鬼？">
+                转:奥瑞旅行是什么鬼？ <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

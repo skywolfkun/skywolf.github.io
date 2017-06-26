@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="记事," />
+  <meta name="keywords" content="获取我附近的商店,GeoHash,java,电商,算法" />
 
 
 
@@ -87,16 +87,22 @@
 
 
 
-<meta name="description" content="08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！">
+<meta name="description" content="上一篇提到根据坐标获取附近的商店根据半径计算的方法，这一篇说一下目前比较常用的GeoHash方法，先简单介绍一下GeoHash算法：
+认识GeoHash　GeoHash算法将二维经纬度坐标直接转换成字符串，每一个字符串代表一个矩形区域，也就是说，这个矩形区域内所有的点（经纬度坐标）都共享相同的GeoHash字符串，字符串的长度越大，矩形的区域就越小，经度也就越高。字符串相似的表示距离相近，这样可">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第一篇">
-<meta property="og:url" content="http://www.tianshangkun.com/2017/03/28/第一篇/index.html">
+<meta property="og:title" content="获取我附近的商店方法(二):GeoHash算法">
+<meta property="og:url" content="http://www.tianshangkun.com/2017/05/04/获取我附近的商店方法-二-GeoHash算法/index.html">
 <meta property="og:site_name" content="天狼武士的Blog">
-<meta property="og:description" content="08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！">
-<meta property="og:updated_time" content="2017-03-28T18:59:05.204Z">
+<meta property="og:description" content="上一篇提到根据坐标获取附近的商店根据半径计算的方法，这一篇说一下目前比较常用的GeoHash方法，先简单介绍一下GeoHash算法：
+认识GeoHash　GeoHash算法将二维经纬度坐标直接转换成字符串，每一个字符串代表一个矩形区域，也就是说，这个矩形区域内所有的点（经纬度坐标）都共享相同的GeoHash字符串，字符串的长度越大，矩形的区域就越小，经度也就越高。字符串相似的表示距离相近，这样可">
+<meta property="og:image" content="http://www.tianshangkun.com/images/geoHash.png">
+<meta property="og:image" content="http://www.tianshangkun.com/images/geoHashLength.png">
+<meta property="og:updated_time" content="2017-05-07T07:46:26.081Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="第一篇">
-<meta name="twitter:description" content="08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！">
+<meta name="twitter:title" content="获取我附近的商店方法(二):GeoHash算法">
+<meta name="twitter:description" content="上一篇提到根据坐标获取附近的商店根据半径计算的方法，这一篇说一下目前比较常用的GeoHash方法，先简单介绍一下GeoHash算法：
+认识GeoHash　GeoHash算法将二维经纬度坐标直接转换成字符串，每一个字符串代表一个矩形区域，也就是说，这个矩形区域内所有的点（经纬度坐标）都共享相同的GeoHash字符串，字符串的长度越大，矩形的区域就越小，经度也就越高。字符串相似的表示距离相近，这样可">
+<meta name="twitter:image" content="http://www.tianshangkun.com/images/geoHash.png">
 
 
 
@@ -124,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://www.tianshangkun.com/2017/03/28/第一篇/"/>
+  <link rel="canonical" href="http://www.tianshangkun.com/2017/05/04/获取我附近的商店方法-二-GeoHash算法/"/>
 
 
 
 
 
-  <title> 第一篇 | 天狼武士的Blog </title>
+  <title> 获取我附近的商店方法(二):GeoHash算法 | 天狼武士的Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -255,7 +261,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.tianshangkun.com/2017/03/28/第一篇/">
+    <link itemprop="mainEntityOfPage" href="http://www.tianshangkun.com/2017/05/04/获取我附近的商店方法-二-GeoHash算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="天狼武士">
@@ -276,7 +282,7 @@
             
             
               
-                第一篇
+                获取我附近的商店方法(二):GeoHash算法
               
             
           </h1>
@@ -291,8 +297,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-28T17:24:04+08:00">
-                2017-03-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-04T17:03:29+08:00">
+                2017-05-04
               </time>
             
 
@@ -310,7 +316,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/03/28/第一篇/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2017/05/04/获取我附近的商店方法-二-GeoHash算法/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -337,7 +343,33 @@
       
 
       
-        <p>　　08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！</p>
+        <p>　上一篇提到根据坐标获取附近的商店根据半径计算的方法，这一篇说一下目前比较常用的GeoHash方法，先简单介绍一下GeoHash算法：</p>
+<h3 id="认识GeoHash"><a href="#认识GeoHash" class="headerlink" title="认识GeoHash"></a>认识GeoHash</h3><p>　GeoHash算法将二维经纬度坐标直接转换成字符串，每一个字符串代表一个矩形区域，也就是说，这个矩形区域内所有的点（经纬度坐标）都共享相同的GeoHash字符串，字符串的长度越大，矩形的区域就越小，经度也就越高。字符串相似的表示距离相近，这样可以利用字符串的前缀匹配来查询附近的POI信息</p>
+<h3 id="GeoHash算法的步骤"><a href="#GeoHash算法的步骤" class="headerlink" title="GeoHash算法的步骤"></a>GeoHash算法的步骤</h3><p>　地球纬度区间是[-90,90]，经度区间是[-180,180]，通过区间法对经度和纬度分别进行计算，假如我们获取到的当前坐标为经度-0.12866, 纬度38.534413，以纬度为例：</p>
+<ol>
+<li>将纬度平均分成两个区间：[-90,0),[0,90]，成为左区间和右区间，可以判断出38.534413属于右区间，则值为1,（如果属于左区间则值为0）；</li>
+<li>接着将右区间继续划分，就变成了[0,45),[45,90],此时，38.534413属于左区间，则值为0</li>
+<li>递归上述过程，则区间的值会越来越逼近38.534413</li>
+<li>随着算法的进行，我们将会得到一个序列，序列的长度跟递归的次数有关，但是一定要保证的是经度和纬度的序列长度是一样的，我这里设置的递归长度是30，经度和纬度加起来就是60，</li>
+<li>根据算法我们最终得到经度的序列为[0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0]，纬度的序列为[1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0]，然后我们根据此序列再组合一个新的序列偶数位放经度，奇数位放纬度，把2串编码组合生成新串[0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0]，实际上这个序列是一串二进制</li>
+<li>最后，我们将这个新串转换成十进制再使用0-9、b-z（去掉a, i, l, o）对这组十进制进行编码得到的字符串eyzgjnfr4p0p就是最终的GeoHash编码。下图是网上给出的不同编码长度给出的精度：</li>
+</ol>
+<p><img src="/images/geoHash.png"><br><img src="/images/geoHashLength.png"></p>
+<p>　得到GeoHash的值之后可以同样的保存近数据库中，每次查询离我最近的数据的时候理论上来说可以根据精确度截取GeoHash的值进行模糊查询，但是这样查询是有问题的，因为你没法保证你每次查询时你的当前坐标刚好在这个矩形的正中间，如果你的坐标处在矩形的边界，那么你就无法获取其附近的数据，那么这个问题怎么解决呢？其实也很简单，以你当前所在位置的矩形为九宫格的中间格子，再获取其相邻的8个矩形。</p>
+<p>　获取其他8个区域的GeoHash也很简单，上面的表已经给出了每一个区域内经度和纬度的宽度，那么直接加减后就可以得出周边相邻的8个格子，我这里自己写了一套GeoHash的算法，得出当前坐标的GeoHash的值以及相邻8个格子的值，代码比较多就不贴上来了，在GitHub上有一个别人写好的JAVA版本的可以直接拿来用，叫<a href="https://github.com/kungfoo/geohash-java" target="_blank" rel="external">geohash-java</a>,貌似maven的仓库中也有</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;ch.hsr&lt;/groupId&gt;
+    &lt;artifactId&gt;geohash&lt;/artifactId&gt;
+    &lt;version&gt;1.3.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre><p> 使用的方法也很简单</p>
+<pre><code>GeoHash geoHash = GeoHash.withCharacterPrecision(38.534413, -0.12866, 12);
+System.out.println(geoHash.toBase32());//获取当前的GeoHash的值
+GeoHash[] adjacent = geoHash.getAdjacent();//获取整个九宫格的GeoHash的值
+for (GeoHash hash : adjacent) {
+  System.out.println(hash.toBase32());
+}
+</code></pre><p> 那么获取到整个九宫格之后至于查询和排序就简单多了，这里不再赘述。</p>
 
       
     </div>
@@ -367,7 +399,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/记事/" rel="tag"># 记事</a>
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/电商/" rel="tag"># 电商</a>
           
         </div>
       
@@ -380,14 +416,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/05/04/获取我附近的商店方法-一-根据坐标计算半径/" rel="next" title="获取我附近的商店方法(一):根据坐标计算半径">
+                <i class="fa fa-chevron-left"></i> 获取我附近的商店方法(一):根据坐标计算半径
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/15/easyUI与angularJS整合（0）：水乳交融篇/" rel="prev" title="easyUI与angularJS整合（0）：水乳交融篇">
-                easyUI与angularJS整合（0）：水乳交融篇 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/06/13/Centos下docker搭建Hadoop集群/" rel="prev" title="Centos下docker搭建Hadoop集群">
+                Centos下docker搭建Hadoop集群 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -460,8 +500,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/1.jpg"
@@ -525,6 +574,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#认识GeoHash"><span class="nav-number">1.</span> <span class="nav-text">认识GeoHash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GeoHash算法的步骤"><span class="nav-number">2.</span> <span class="nav-text">GeoHash算法的步骤</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="前端,easyUI,angularJS," />
+  <meta name="keywords" content="前端,angularJS,easyUI," />
 
 
 
@@ -305,6 +305,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/04/15/easyUI与angularJS整合（0）：水乳交融篇/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -362,9 +372,9 @@
           
             <a href="/tags/前端/" rel="tag"># 前端</a>
           
-            <a href="/tags/easyUI/" rel="tag"># easyUI</a>
-          
             <a href="/tags/angularJS/" rel="tag"># angularJS</a>
+          
+            <a href="/tags/easyUI/" rel="tag"># easyUI</a>
           
         </div>
       
@@ -438,7 +448,7 @@
           
   <div class="comments" id="comments">
     
-      <div id="uyan_frame"></div>
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
     
   </div>
 
@@ -477,7 +487,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -490,7 +500,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -552,7 +562,7 @@
 
 
 <div class="powered-by">
-  <a class="theme-link" href="www.tianshangkun.com">天狼武士</a> 专属博客
+  <a class="theme-link" href="http://www.tianshangkun.com">天狼武士</a> 专属博客
 </div>
 
 <div class="theme-info">
@@ -660,19 +670,27 @@
 
 
   
-
-
-
-
-
-  
     
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "a9da684457284c92a0a08327257c0a71",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
 
-    
-      <!-- UY BEGIN -->
-      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2129109"></script>
-      <!-- UY END -->
-    
+
+
+
+
+
+
+
+
+
   
 
 
@@ -681,20 +699,22 @@
 
   
 
-
-
-
-
-
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
 
-
-
-
-
-  
-
-  
 
   
 
