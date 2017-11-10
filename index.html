@@ -256,6 +256,656 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.tianshangkun.com/2017/11/10/SpringBoot集成Shiro并用MongoDB做Session存储/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="天狼武士">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天狼武士的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/11/10/SpringBoot集成Shiro并用MongoDB做Session存储/" itemprop="url">
+                  SpringBoot集成Shiro并用MongoDB做Session存储
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-10T14:04:12+08:00">
+                2017-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>　之前项目鉴权一直使用的Shiro，那是在Spring MVC里面使用的比较多，而且都是用XML来配置，用Shiro来做权限控制相对比较简单而且成熟，而且我一直都把Shiro的session放在mongodb中，这个比较符合mongodb的设计初衷，而且在分布式项目中mongodb也作为一个中间层，用来很好很方便解决分布式环境下的session同步的问题</p>
+<p>　自从SpringBoot问世之后我的项目基本上能用SpringBoot的就会用SpringBoot，用MAVEN做统一集中管理也很方便，虽然SpringBoot也提供了一套权限安全框架Spring Security，但是相对来说还是不是太好用，所以还是用Shiro来的方便一点，SpringBoot集成Shiro要比Spring MVC要简单的多，至少没有一堆XML配置，看起来更清爽，那么接下来我们就开始集成。</p>
+<p>　第一步必然是在MAVEN中先添加Shiro和mongo的依赖，我用的Shiro版本是</p>
+<pre><code>&lt;shiro.version&gt;1.2.3&lt;/shiro.version&gt;
+</code></pre><p>　添加依赖：</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.shiro&lt;/groupId&gt;
+    &lt;artifactId&gt;shiro-core&lt;/artifactId&gt;
+    &lt;version&gt;${shiro.version}&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.shiro&lt;/groupId&gt;
+    &lt;artifactId&gt;shiro-web&lt;/artifactId&gt;
+    &lt;version&gt;${shiro.version}&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.shiro&lt;/groupId&gt;
+    &lt;artifactId&gt;shiro-spring&lt;/artifactId&gt;
+    &lt;version&gt;${shiro.version}&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.mongodb&lt;/groupId&gt;
+      &lt;artifactId&gt;mongo-java-driver&lt;/artifactId&gt;
+      &lt;version&gt;3.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+  &lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-data-mongodb&lt;/artifactId&gt;
+  &lt;version&gt;1.7.0.RELEASE&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre><p>　然后在application.xml或yml中配置mongodb</p>
+<pre><code>spring.data.mongodb.host=127.0.0.1
+spring.data.mongodb.port=27017
+spring.data.mongodb.database=SHIRO_INFO
+</code></pre><p>　配置完成之后我们开始正式写Shiro认证的代码，先自定义一个鉴权realm，继承自AuthorizingRealm</p>
+<pre><code>public class ShiroDbRealm extends AuthorizingRealm {
+
+  /**
+   * 用户信息操作
+   */
+  private SystemUserService systemUserService;
+
+  public ShiroDbRealm() {}
+
+  public ShiroDbRealm(SystemUserService systemUserService) {
+    this.systemUserService = systemUserService;
+  }
+
+  /**
+   * 授权信息
+   */
+  @Override
+  protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+    // 首先从session中获取权限
+    SimpleAuthorizationInfo info = (SimpleAuthorizationInfo) ShiroKit.getShiroSessionAttr(&quot;perms&quot;);
+    if (null != info &amp;&amp; !CollectionUtils.isEmpty(info.getRoles())
+        &amp;&amp; !CollectionUtils.isEmpty(info.getStringPermissions())) {
+      return info;
+
+    }
+    return null;
+
+  }
+
+  /**
+   * 认证信息
+   */
+  protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken)
+      throws AuthenticationException {
+    UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
+    String userName = token.getUsername();
+    if (userName != null &amp;&amp; !&quot;&quot;.equals(userName)) {
+      SystemUser key = new SystemUser();
+      key.setLoginName(token.getUsername());
+      key.setPassword(String.valueOf(token.getPassword()));
+      SystemUser user = systemUserService.login(key);
+
+      if (user != null) {
+        Subject userTemp = SecurityUtils.getSubject();
+        userTemp.getSession().setAttribute(&quot;userId&quot;, user.getId());
+        userTemp.getSession().setAttribute(&quot;userName&quot;, user.getUserName());
+        return new SimpleAuthenticationInfo(user.getLoginName(), user.getPassword(), getName());
+      }
+    }
+    return null;
+  }
+
+}
+</code></pre><p>　存储session进mongodb的Repository和实现：</p>
+<pre><code>public interface ShiroSessionRepository {
+
+  /**
+   * 
+   * @param session
+   */
+  void saveSession(Session session);
+  ......
+}
+</code></pre><p> MongoDBSessionRepository.java</p>
+<pre><code>public class MongoDBSessionRepository implements ShiroSessionRepository {
+    private MongoTemplate mongoTemplate;
+
+    public MongoDBSessionRepository() {}
+
+    public MongoDBSessionRepository(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
+    }
+    @Override
+    public void saveSession(Session session) {
+      if (session == null || session.getId() == null) {
+        return;
+      }
+      SessionBean bean = new SessionBean();
+      bean.setKey(getSessionKey(session.getId()));
+      bean.setValue(SerializeUtil.serialize(session));
+      bean.setPrincipal(null);
+      bean.setHost(session.getHost());
+      bean.setStartTimestamp(session.getStartTimestamp());
+      bean.setLastAccessTime(session.getLastAccessTime());
+      bean.setTimeoutTime(getTimeoutTime(session.getStartTimestamp(), session.getTimeout()));
+      mongoTemplate.insert(bean);
+    }
+    ......
+}
+</code></pre><p>　ShiroSessionDAO.java</p>
+<pre><code>public class ShiroSessionDAO extends AbstractSessionDAO {
+
+ /**
+  * 日志记录器
+  */
+ private static final Logger log = LoggerFactory.getLogger(ShiroSessionDAO.class);
+
+ /**
+  * 数据库存储
+  */
+ private ShiroSessionRepository shiroSessionRepository;
+
+ /**
+  * 
+  * @return
+  */
+ public ShiroSessionRepository getShiroSessionRepository() {
+   return shiroSessionRepository;
+ }
+
+ /**
+  * 
+  * @param shiroSessionRepository
+  */
+ public void setShiroSessionRepository(ShiroSessionRepository shiroSessionRepository) {
+   this.shiroSessionRepository = shiroSessionRepository;
+ }
+
+ @Override
+ public void update(Session session) throws UnknownSessionException {
+   getShiroSessionRepository().updateSession(session);
+ }
+
+ @Override
+ public void delete(Session session) {
+   if (session == null) {
+     log.error(&quot;session can not be null,delete failed&quot;);
+     return;
+   }
+   Serializable id = session.getId();
+   if (id != null) {
+     getShiroSessionRepository().deleteSession(id);
+   }
+ }
+
+ @Override
+ public Collection&lt;Session&gt; getActiveSessions() {
+   return getShiroSessionRepository().getAllSessions();
+ }
+
+ @Override
+ protected Serializable doCreate(Session session) {
+   Serializable sessionId = this.generateSessionId(session);
+   this.assignSessionId(session, sessionId);
+   getShiroSessionRepository().saveSession(session);
+   return sessionId;
+ }
+
+ @Override
+ protected Session doReadSession(Serializable sessionId) {
+   return getShiroSessionRepository().getSession(sessionId);
+ }
+
+}
+</code></pre><p>　OK！所有基础类已经完成，最后写一个config用来全部初始化和配置Shiro</p>
+<pre><code>@Configuration
+public class ShiroConfig {
+  @Resource
+  private MongoTemplate mongoTemplate;
+  @Resource
+  private SystemUserService systemUserService;// 这是用来判断用户名和密码的service
+
+  @Bean
+  public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager securityManager) {
+    ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+
+    // 必须设置 SecurityManager
+    shiroFilterFactoryBean.setSecurityManager(securityManager);
+    shiroFilterFactoryBean.setLoginUrl(&quot;/login&quot;);
+    // 登录成功后要跳转的链接
+    shiroFilterFactoryBean.setSuccessUrl(&quot;/index&quot;);
+    // 未授权界面;
+    shiroFilterFactoryBean.setUnauthorizedUrl(&quot;/403&quot;);
+
+    // 拦截器.
+    Map&lt;String, String&gt; filterChainDefinitionMap = new LinkedHashMap&lt;String, String&gt;();
+    filterChainDefinitionMap.put(&quot;/static/**&quot;, &quot;anon&quot;);
+    filterChainDefinitionMap.put(&quot;/ajaxLogin&quot;, &quot;anon&quot;);
+    filterChainDefinitionMap.put(&quot;/libs/**&quot;, &quot;anon&quot;);
+    filterChainDefinitionMap.put(&quot;/images/**&quot;, &quot;anon&quot;);
+    filterChainDefinitionMap.put(&quot;/logout&quot;, &quot;logout&quot;);
+    filterChainDefinitionMap.put(&quot;/**&quot;, &quot;authc&quot;);
+
+    shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+    return shiroFilterFactoryBean;
+  }
+
+  public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(
+      DefaultWebSecurityManager securityManager) {
+    AuthorizationAttributeSourceAdvisor adv = new AuthorizationAttributeSourceAdvisor();
+    adv.setSecurityManager(securityManager);
+    return adv;
+  }
+
+  @Bean
+  public DefaultWebSecurityManager securityManager(DefaultWebSessionManager sessionManager,
+      ShiroDbRealm myShiroRealm) {
+    DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+    // 设置realm.
+    securityManager.setRealm(myShiroRealm);
+    securityManager.setSessionManager(sessionManager);
+    return securityManager;
+  }
+
+  /**
+   * 身份认证realm; (这里传递systemUserService给自定义的ShiroDbRealm初始化)
+   * 
+   * @return
+   */
+  @Bean
+  public ShiroDbRealm myShiroRealm() {
+    ShiroDbRealm myShiroRealm = new ShiroDbRealm(systemUserService);
+    return myShiroRealm;
+  }
+
+  @Bean
+  public DefaultWebSessionManager sessionManager(ShiroSessionDAO shiroSessionDao) {
+    DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+    sessionManager.setGlobalSessionTimeout(1800000l);
+    sessionManager.setDeleteInvalidSessions(true);
+    sessionManager.setSessionValidationSchedulerEnabled(true);
+    sessionManager.setSessionDAO(shiroSessionDao);
+    sessionManager.setSessionIdCookieEnabled(true);
+    SimpleCookie cookie = new SimpleCookie(ShiroHttpSession.DEFAULT_SESSION_ID_NAME);
+    cookie.setHttpOnly(true);
+    cookie.setMaxAge(1800000);
+    sessionManager.setSessionIdCookie(cookie);
+    return sessionManager;
+  }
+
+  @Bean
+  public ShiroSessionDAO shiroSessionDao(MongoDBSessionRepository shiroSessionRepository) {
+    ShiroSessionDAO dao = new ShiroSessionDAO();
+    dao.setShiroSessionRepository(shiroSessionRepository);
+    return dao;
+  }
+
+  @Bean
+  MongoDBSessionRepository shiroSessionRepository() {
+    MongoDBSessionRepository resp = new MongoDBSessionRepository(mongoTemplate);
+    return resp;
+  }
+
+
+}
+</code></pre><p>　大功告成，这里只是一个简单的配置，代码也是我从项目里面节选和修改过的，至于在controller里面怎么使用，怎么做不同权限的鉴权工作那就在自己的代码里面实现就行。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.tianshangkun.com/2017/07/12/Centos下搭建MariaDB集群/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="天狼武士">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天狼武士的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/12/Centos下搭建MariaDB集群/" itemprop="url">
+                  Centos下搭建MariaDB集群
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-12T22:27:31+08:00">
+                2017-07-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>　最近公司测试库改建，之前测试库上面装的是老的MySql，我顺手就把它换成了MariaDB，后来因为连的人太多就爆了Too Many Connections，本来很简单的事情，就让技术部一小伙子上去把连接数调大了一点，很简单，但是后来我发现他居然直接写在了My.cnf下面，显然他是不知道MariaDB早就从My.cnf下面扩展到了my.cnf.d文件夹下面，于是就跟他一番讲解，然后就引出了配置集群的话题，所以觉得有必要写一下MariaDB的一些配置和集群的配置方法。</p>
+<p>　MariaDB本身就是MySql的一个分支，所以很多东西都是MySql延展下来的，既然要说的话就先从安装说起吧，在CentOS下安装还是很简单的，官网有很明确的说明以及各种安装方法，我个人比较喜欢yum源的安装方法，下面我们开始。</p>
+<h2 id="第一步、安装MariaDB"><a href="#第一步、安装MariaDB" class="headerlink" title="第一步、安装MariaDB"></a>第一步、安装MariaDB</h2><p>　我们以最小集群来说，两台服务器先做主从配置，然后再做互为主从的配置,两台主机的IP分别为：192.168.70.135，192.168.70.137。</p>
+<p>　先去官网上复制一下源的配置：</p>
+<pre><code>https://downloads.mariadb.org/mariadb/repositories/#mirror=neusoft&amp;distro=CentOS&amp;distro_release=centos7-amd64--centos7&amp;version=10.2
+</code></pre><p>　选择对应的操作系统版本及MariaDB的版本后会给出对应的配置，我这里选择的是Centos7,MariaDB的版本是10.2，所以给出的源是这样的：</p>
+<pre><code># MariaDB 10.2 CentOS repository list - created 2017-07-12 14:25 UTC
+# http://downloads.mariadb.org/mariadb/repositories/
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.2/centos7-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+</code></pre><p>　OK！然后直接vim  /etc/yum.repos.d/MariaDB.repo复制进去保存即可，然后yum安装</p>
+<pre><code>yum install MariaDB-server MariaDB-client
+</code></pre><p>　不要以为安装完成就可以使用，mysql的用户和数据文件夹先指定一下，我的数据文件放在了/opt/data/mysql下面，执行下面的命令</p>
+<pre><code>mysql_install_db --defaults-file=/etc/my.cnf --datadir=/opt/data/mysql/ --user=mysql
+</code></pre><p>　OK!这时启动一下看看</p>
+<pre><code>systemctl start mariadb
+systemctl status mariadb
+</code></pre><p>　不出意外，启动成功，设置一下root密码</p>
+<pre><code>mysqladmin -u root password &quot;123456&quot;
+</code></pre><p>　登录一下，不出意外应该成功了。</p>
+<h2 id="第二步、配置MariaDB"><a href="#第二步、配置MariaDB" class="headerlink" title="第二步、配置MariaDB"></a>第二步、配置MariaDB</h2><p>　上面只是简单的安装，下面我们再简单的配置一下为集群做准备，先进入/etc/my.cnf.d/文件夹，MariaDB的所有配置文件都在这下面，主要配置文件还是在/etc/my.cnf.d/server.cnf下面</p>
+<pre><code>vim /etc/my.cnf.d/server.cnf
+</code></pre><p>　修改[mysqld]下面的内容</p>
+<pre><code>[mysqld]
+character-set-server=utf8
+lower_case_table_names=1
+init_connect=&apos;SET NAMES utf8&apos;
+datadir=/opt/data/mysql
+socket=/opt/data/mysql/mysql.sock
+server-id   = 1
+log-bin=mysql-bin
+log-bin-index=master-bin.index
+relay-log=relay-log
+relay-log-index=relay-bin
+log-slave=updates
+</code></pre><p>　1.  character-set-server是设置数据库的编码格式<br>　2.  lower_case_table_names是设置数据库不区分大小写<br>　3.  datadir，socket是设置数据库实例的目录<br>　4.  server-id这个很重要，是指定集群中数据库服务的ID，在集群情况下每台数据库服务的ID都不能重复<br>　5.  log-bin和log-bin-index是开始MySQL的二进制日志并指定日志文件名<br>　6.  relay-log和relay-log-index是开始MySQL的中继日志并指定日志文件名<br>　7.  log-slave这个是设定slave节点的二进制输出，若没有设定此项则slave不会输出二进制，但是为了能够让slave也能够升级为master则该项最好配置一下</p>
+<p>　为了能让两台MySQL服务能够互相连接，最好先创建让他们互相连接的数据库账户，现在master上简历用户，并授权，该账户为同步专用</p>
+<pre><code>mysql&gt; GRANT REPLICATION SLAVE ON *.* TO repl@192.168.70.137 IDENTIFIED BY &apos;123456&apos;;
+</code></pre><p>　PS：另外一台机器的/etc/my.cnf.d/server.cnf中其他配置都一样，就是server-id改成2，配置同步账户的时候IP地址改成可访问的机器的IP就行。</p>
+<p>  配置完成后两台机器都重启。</p>
+<h2 id="第三步、准备同步-配置主从"><a href="#第三步、准备同步-配置主从" class="headerlink" title="第三步、准备同步,配置主从"></a>第三步、准备同步,配置主从</h2><p>　全部配置并且两台机器都启动成功之后，就可以开始准备同步两台机器的数据了，在此之前先登录第一台机器的数据库，查看一下master的状态：</p>
+<pre><code>mysql&gt; show master status;
++------------------+----------+--------------+------------------+
+| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB |
++------------------+----------+--------------+------------------+
+| mysql-bin.000001 |      922 |              |                  |
++------------------+----------+--------------+------------------+
+</code></pre><p>　File就是当前该数据库binlog日志的文件索引所在的文件名，position是当前日志索引的位置，将这两个值记录下来，然后登录第二台数据库服务器，启动slave：</p>
+<pre><code>mysql&gt; CHANGE MASTER TO 
+        MASTER_HOST=&apos;192.168.70.135&apos;,
+        MASTER_USER=&apos;repl&apos;,
+        MASTER_PASSWORD=&apos;123456&apos;,
+        MASTER_LOG_FILE=&apos;mysql-bin.000001&apos;,
+        MASTER_LOG_POS=922;
+</code></pre><p>　执行完成之后如果没有报错再执行show slave status\G命令查看slave节点的同步状态，如果ERROR没有显示错误并且Slave_IO_Running都为yes则表示同步成功。</p>
+<pre><code>    MariaDB [(none)]&gt; show slave status\G;
+*************************** 1. row ***************************
+               Slave_IO_State: Waiting for master to send event
+                  Master_Host: 192.168.70.135
+                  Master_User: repl
+                  Master_Port: 3306
+                Connect_Retry: 60
+              Master_Log_File: mysql-bin.000001
+          Read_Master_Log_Pos: 922
+               Relay_Log_File: relay-bin.000003
+                Relay_Log_Pos: 555
+        Relay_Master_Log_File: mysql-bin.000001
+             Slave_IO_Running: Yes
+            Slave_SQL_Running: Yes
+              Replicate_Do_DB: 
+          Replicate_Ignore_DB: 
+           Replicate_Do_Table: 
+       Replicate_Ignore_Table: 
+      Replicate_Wild_Do_Table: 
+  Replicate_Wild_Ignore_Table: 
+                   Last_Errno: 0
+                   Last_Error: 
+                 Skip_Counter: 0
+          Exec_Master_Log_Pos: 922
+              Relay_Log_Space: 858
+              Until_Condition: None
+               Until_Log_File: 
+                Until_Log_Pos: 0
+           Master_SSL_Allowed: No
+           Master_SSL_CA_File: 
+           Master_SSL_CA_Path: 
+              Master_SSL_Cert: 
+            Master_SSL_Cipher: 
+               Master_SSL_Key: 
+        Seconds_Behind_Master: 0
+Master_SSL_Verify_Server_Cert: No
+                Last_IO_Errno: 0
+                Last_IO_Error: 
+               Last_SQL_Errno: 0
+               Last_SQL_Error: 
+  Replicate_Ignore_Server_Ids: 
+             Master_Server_Id: 1
+               Master_SSL_Crl: 
+           Master_SSL_Crlpath: 
+                   Using_Gtid: No
+                  Gtid_IO_Pos: 
+      Replicate_Do_Domain_Ids: 
+  Replicate_Ignore_Domain_Ids: 
+                Parallel_Mode: conservative
+                    SQL_Delay: 0
+          SQL_Remaining_Delay: NULL
+      Slave_SQL_Running_State: Slave has read all relay log; waiting for the slave I/O thread to update it
+1 row in set (0.00 sec)
+</code></pre><p>　这时在master节点的数据库服务器中创建数据库、创建表的话slave节点就直接可以看到了</p>
+<p>　PS：同步之前最好先检查一下你服务器的防火墙有没有拦截3306端口！</p>
+<h2 id="第四步、双主配置"><a href="#第四步、双主配置" class="headerlink" title="第四步、双主配置"></a>第四步、双主配置</h2><p>　前面的所有步骤完成后已经可以搭建单主多slave的架构了，如果想配置互为主从的其实很简单，在master节点中重复第三步，把master的IP指向对应的节点就好，不过需要注意的是Master可以有多个Slave，但是一个Slave只能挂靠一个Master！好的，我们先去192.168.70.137这台节点上查看一下master的status(就是第三步中的slave节点)</p>
+<pre><code>mysql&gt; show master status;
++------------------+----------+--------------+------------------+
+| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB |
++------------------+----------+--------------+------------------+
+| mysql-bin.000002 |      985 |              |                  |
++------------------+----------+--------------+------------------+
+</code></pre><p>　然后再刚才master节点的数据库中执行：</p>
+<pre><code>mysql&gt; CHANGE MASTER TO 
+        MASTER_HOST=&apos;192.168.70.137&apos;,
+        MASTER_USER=&apos;repl&apos;,
+        MASTER_PASSWORD=&apos;123456&apos;,
+        MASTER_LOG_FILE=&apos;mysql-bin.000002&apos;,
+        MASTER_LOG_POS=985;
+</code></pre><p>　如果没有报错，那么双主执行成功，在两台机器间创建数据库、创建表、创建数据测试一下，两台机器就会互相同步数据了！</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://www.tianshangkun.com/2017/06/13/Centos下docker搭建Hadoop集群/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1619,130 +2269,13 @@ getObjectData:function(jq, options){
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.tianshangkun.com/2017/03/28/第一篇/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="天狼武士">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/1.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="天狼武士的Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/28/第一篇/" itemprop="url">
-                  第一篇
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-28T17:24:04+08:00">
-                2017-03-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>　　08年开始从事IT行业，一直都在敲代码的第一线，从刚开始的VB到C#、.net然后又开始JAVA，期间一直想做一个BLOG记录各种事情顺便也做各种整理，但是由于自身的懒惰从来都没有实现过，今年步入而立之年，正式决定开始记录自己工作生活中遇到的各种事情，其实主要以工作记录和技术总结为主，希望自己能够坚持下去！</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1785,7 +2318,7 @@ getObjectData:function(jq, options){
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1798,7 +2331,7 @@ getObjectData:function(jq, options){
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
