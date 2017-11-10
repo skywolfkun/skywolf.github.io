@@ -387,7 +387,6 @@ spring.data.mongodb.database=SHIRO_INFO
    */
   @Override
   protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-    // 首先从session中获取权限
     SimpleAuthorizationInfo info = (SimpleAuthorizationInfo) ShiroKit.getShiroSessionAttr(&quot;perms&quot;);
     if (null != info &amp;&amp; !CollectionUtils.isEmpty(info.getRoles())
         &amp;&amp; !CollectionUtils.isEmpty(info.getStringPermissions())) {
@@ -535,12 +534,9 @@ public class ShiroConfig {
   public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager securityManager) {
     ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 
-    // 必须设置 SecurityManager
     shiroFilterFactoryBean.setSecurityManager(securityManager);
     shiroFilterFactoryBean.setLoginUrl(&quot;/login&quot;);
-    // 登录成功后要跳转的链接
     shiroFilterFactoryBean.setSuccessUrl(&quot;/index&quot;);
-    // 未授权界面;
     shiroFilterFactoryBean.setUnauthorizedUrl(&quot;/403&quot;);
 
     // 拦截器.

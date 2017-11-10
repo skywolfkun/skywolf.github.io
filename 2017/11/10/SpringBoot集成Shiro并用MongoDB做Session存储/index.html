@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="天狼武士的Blog">
 <meta property="og:description" content="之前项目鉴权一直使用的Shiro，那是在Spring MVC里面使用的比较多，而且都是用XML来配置，用Shiro来做权限控制相对比较简单而且成熟，而且我一直都把Shiro的session放在mongodb中，这个比较符合mongodb的设计初衷，而且在分布式项目中mongodb也作为一个中间层，用来很好很方便解决分布式环境下的session同步的问题
 　自从SpringBoot问世之后我的项目">
-<meta property="og:updated_time" content="2017-11-10T06:52:10.460Z">
+<meta property="og:updated_time" content="2017-11-10T07:04:53.226Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot集成Shiro并用MongoDB做Session存储">
 <meta name="twitter:description" content="之前项目鉴权一直使用的Shiro，那是在Spring MVC里面使用的比较多，而且都是用XML来配置，用Shiro来做权限控制相对比较简单而且成熟，而且我一直都把Shiro的session放在mongodb中，这个比较符合mongodb的设计初衷，而且在分布式项目中mongodb也作为一个中间层，用来很好很方便解决分布式环境下的session同步的问题
@@ -394,7 +394,6 @@ spring.data.mongodb.database=SHIRO_INFO
    */
   @Override
   protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-    // 首先从session中获取权限
     SimpleAuthorizationInfo info = (SimpleAuthorizationInfo) ShiroKit.getShiroSessionAttr(&quot;perms&quot;);
     if (null != info &amp;&amp; !CollectionUtils.isEmpty(info.getRoles())
         &amp;&amp; !CollectionUtils.isEmpty(info.getStringPermissions())) {
@@ -542,12 +541,9 @@ public class ShiroConfig {
   public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager securityManager) {
     ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 
-    // 必须设置 SecurityManager
     shiroFilterFactoryBean.setSecurityManager(securityManager);
     shiroFilterFactoryBean.setLoginUrl(&quot;/login&quot;);
-    // 登录成功后要跳转的链接
     shiroFilterFactoryBean.setSuccessUrl(&quot;/index&quot;);
-    // 未授权界面;
     shiroFilterFactoryBean.setUnauthorizedUrl(&quot;/403&quot;);
 
     // 拦截器.
