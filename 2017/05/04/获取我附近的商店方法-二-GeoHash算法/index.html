@@ -97,7 +97,7 @@
 认识GeoHash　GeoHash算法将二维经纬度坐标直接转换成字符串，每一个字符串代表一个矩形区域，也就是说，这个矩形区域内所有的点（经纬度坐标）都共享相同的GeoHash字符串，字符串的长度越大，矩形的区域就越小，经度也就越高。字符串相似的表示距离相近，这样可">
 <meta property="og:image" content="http://www.tianshangkun.com/images/geoHash.png">
 <meta property="og:image" content="http://www.tianshangkun.com/images/geoHashLength.png">
-<meta property="og:updated_time" content="2017-05-07T07:46:26.081Z">
+<meta property="og:updated_time" content="2018-05-26T15:19:20.463Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="获取我附近的商店方法(二):GeoHash算法">
 <meta name="twitter:description" content="上一篇提到根据坐标获取附近的商店根据半径计算的方法，这一篇说一下目前比较常用的GeoHash方法，先简单介绍一下GeoHash算法：
@@ -376,7 +376,7 @@
       
         <p>　上一篇提到根据坐标获取附近的商店根据半径计算的方法，这一篇说一下目前比较常用的GeoHash方法，先简单介绍一下GeoHash算法：</p>
 <h3 id="认识GeoHash"><a href="#认识GeoHash" class="headerlink" title="认识GeoHash"></a>认识GeoHash</h3><p>　GeoHash算法将二维经纬度坐标直接转换成字符串，每一个字符串代表一个矩形区域，也就是说，这个矩形区域内所有的点（经纬度坐标）都共享相同的GeoHash字符串，字符串的长度越大，矩形的区域就越小，经度也就越高。字符串相似的表示距离相近，这样可以利用字符串的前缀匹配来查询附近的POI信息</p>
-<h3 id="GeoHash算法的步骤"><a href="#GeoHash算法的步骤" class="headerlink" title="GeoHash算法的步骤"></a>GeoHash算法的步骤</h3><p>　地球纬度区间是[-90,90]，经度区间是[-180,180]，通过区间法对经度和纬度分别进行计算，假如我们获取到的当前坐标为经度-0.12866, 纬度38.534413，以纬度为例：</p>
+<h3 id="GeoHash算法的步骤"><a href="#GeoHash算法的步骤" class="headerlink" title="GeoHash算法的步骤"></a>GeoHash算法的步骤</h3><p>　地球纬度区间是[-90,90]，经度区间是[-180,180]，通过区间法对经度和纬度分别进行计算，假如我们获取到的当前坐标为经度-0.12866, 纬度38.534413，以纬度为例：<br><a id="more"></a></p>
 <ol>
 <li>将纬度平均分成两个区间：[-90,0),[0,90]，成为左区间和右区间，可以判断出38.534413属于右区间，则值为1,（如果属于左区间则值为0）；</li>
 <li>接着将右区间继续划分，就变成了[0,45),[45,90],此时，38.534413属于左区间，则值为0</li>

@@ -93,7 +93,7 @@
 <meta property="og:url" content="http://www.tianshangkun.com/2018/05/15/ElasticSearch的搭建与数据统计/index.html">
 <meta property="og:site_name" content="天狼武士的Blog">
 <meta property="og:description" content="平台内的产品有一个数据分析，统计平台内某个商户某个时间段内（今天、昨天、7天内、30天内……）的各种数据分析，这种分析显然用MySql的count、sum、GroupBy之类的去查询是很不靠谱的，尤其是在数据量很大的情况下效率就不言而喻了，本来想着用HBase的MR来做，或者直接把各纬度的数据通过HADOOP的MR处理完存到HBase里面，后来与朋友聊天后被朋友严重鄙视了一顿，鄙视的内容基本是嫌">
-<meta property="og:updated_time" content="2018-05-15T12:20:01.491Z">
+<meta property="og:updated_time" content="2018-05-26T15:15:00.148Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ElasticSearch的搭建与数据统计">
 <meta name="twitter:description" content="平台内的产品有一个数据分析，统计平台内某个商户某个时间段内（今天、昨天、7天内、30天内……）的各种数据分析，这种分析显然用MySql的count、sum、GroupBy之类的去查询是很不靠谱的，尤其是在数据量很大的情况下效率就不言而喻了，本来想着用HBase的MR来做，或者直接把各纬度的数据通过HADOOP的MR处理完存到HBase里面，后来与朋友聊天后被朋友严重鄙视了一顿，鄙视的内容基本是嫌">
@@ -368,7 +368,7 @@
       
 
       
-        <p>　平台内的产品有一个数据分析，统计平台内某个商户某个时间段内（今天、昨天、7天内、30天内……）的各种数据分析，这种分析显然用MySql的count、sum、GroupBy之类的去查询是很不靠谱的，尤其是在数据量很大的情况下效率就不言而喻了，本来想着用HBase的MR来做，或者直接把各纬度的数据通过HADOOP的MR处理完存到HBase里面，后来与朋友聊天后被朋友严重鄙视了一顿，鄙视的内容基本是嫌弃我们的数据量太小根本用不到HBase更用不到MR，在朋友的极力蛊惑之下决定用ElasticSearch来实现以下简称ES，好吧，那我们还是从传统的搭建-采坑-填坑-再采坑-再填坑开始。</p>
+        <p>　平台内的产品有一个数据分析，统计平台内某个商户某个时间段内（今天、昨天、7天内、30天内……）的各种数据分析，这种分析显然用MySql的count、sum、GroupBy之类的去查询是很不靠谱的，尤其是在数据量很大的情况下效率就不言而喻了，本来想着用HBase的MR来做，或者直接把各纬度的数据通过HADOOP的MR处理完存到HBase里面，后来与朋友聊天后被朋友严重鄙视了一顿，鄙视的内容基本是嫌弃我们的数据量太小根本用不到HBase更用不到MR，在朋友的极力蛊惑之下决定用ElasticSearch来实现以下简称ES，好吧，那我们还是从传统的搭建-采坑-填坑-再采坑-再填坑开始。<br><a id="more"></a></p>
 <h2 id="1、下载并安装配置ElasticSearch"><a href="#1、下载并安装配置ElasticSearch" class="headerlink" title="1、下载并安装配置ElasticSearch"></a>1、下载并安装配置ElasticSearch</h2><p>　ElasticSearch的官网<a href="http://www.elastic.co/products/elasticsearch" target="_blank" rel="external">http://www.elastic.co/products/elasticsearch</a>找到需要的版本，我这里选择的是5.6.9的版本，不要问我为什么，因为最新版在我的未知领域有更多的坑！直接下载5.6.9是我目前用着最舒服的一个版本，ES依赖最低JDK1.8版本，所以环境变量一定要配置好</p>
 <pre><code>wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.9.tar.gz
 tar -zxvf elasticsearch-5.6.9.tar.gz -C /usr/local/

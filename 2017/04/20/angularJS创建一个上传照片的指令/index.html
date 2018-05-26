@@ -93,7 +93,7 @@
 <meta property="og:url" content="http://www.tianshangkun.com/2017/04/20/angularJS创建一个上传照片的指令/index.html">
 <meta property="og:site_name" content="天狼武士的Blog">
 <meta property="og:description" content="angularJS在近几年发展火热，也无疑是目前市面上来说比较牛逼且成熟的框架，在单页面前端应用当中应该可以说是王者，双向绑定省去了大量的前端代码，控制器在其作用于方面的控制也是相当腻害，今天我们要说的是另外一个比较牛逼的功能，就是angularJS的指令directive，之前没听说过angularJS指令的朋友请自行度娘，随便搜一条文章都比我说的详细，这次用一个我自己写的图片上传的指令来做为">
-<meta property="og:updated_time" content="2017-04-20T12:14:00.843Z">
+<meta property="og:updated_time" content="2018-05-26T15:16:10.448Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="angularJS创建一个上传照片的指令">
 <meta name="twitter:description" content="angularJS在近几年发展火热，也无疑是目前市面上来说比较牛逼且成熟的框架，在单页面前端应用当中应该可以说是王者，双向绑定省去了大量的前端代码，控制器在其作用于方面的控制也是相当腻害，今天我们要说的是另外一个比较牛逼的功能，就是angularJS的指令directive，之前没听说过angularJS指令的朋友请自行度娘，随便搜一条文章都比我说的详细，这次用一个我自己写的图片上传的指令来做为">
@@ -368,8 +368,7 @@
       
 
       
-        <p>　angularJS在近几年发展火热，也无疑是目前市面上来说比较牛逼且成熟的框架，在单页面前端应用当中应该可以说是王者，双向绑定省去了大量的前端代码，控制器在其作用于方面的控制也是相当腻害，今天我们要说的是另外一个比较牛逼的功能，就是angularJS的指令directive，之前没听说过angularJS指令的朋友请自行度娘，随便搜一条文章都比我说的详细，这次用一个我自己写的图片上传的指令来做为案例，详细说明一下实际操作过程中的指令。</p>
-<p>　之前我们前端的附件上传用的是jqueryFileUpload，每次使用都要在页面把样式画好，然后再控制器中初始化upload组件，上传成功或失败时候还要做相应的处理，这样每次写一个附件上传都要写代码去处理，这样很重复劳动，所以就想利用angularJS的指令把重复劳动的环节给去掉，具体代码如下：</p>
+        <p>　angularJS在近几年发展火热，也无疑是目前市面上来说比较牛逼且成熟的框架，在单页面前端应用当中应该可以说是王者，双向绑定省去了大量的前端代码，控制器在其作用于方面的控制也是相当腻害，今天我们要说的是另外一个比较牛逼的功能，就是angularJS的指令directive，之前没听说过angularJS指令的朋友请自行度娘，随便搜一条文章都比我说的详细，这次用一个我自己写的图片上传的指令来做为案例，详细说明一下实际操作过程中的指令。<br><a id="more"></a><br>　之前我们前端的附件上传用的是jqueryFileUpload，每次使用都要在页面把样式画好，然后再控制器中初始化upload组件，上传成功或失败时候还要做相应的处理，这样每次写一个附件上传都要写代码去处理，这样很重复劳动，所以就想利用angularJS的指令把重复劳动的环节给去掉，具体代码如下：</p>
 <pre><code>.directive(&apos;imageUpload&apos;,[&apos;Constants&apos;,function(Constants){
 return {
     restrict: &apos;E&apos;,

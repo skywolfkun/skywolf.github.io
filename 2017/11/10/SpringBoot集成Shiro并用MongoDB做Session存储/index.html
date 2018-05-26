@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="天狼武士的Blog">
 <meta property="og:description" content="之前项目鉴权一直使用的Shiro，那是在Spring MVC里面使用的比较多，而且都是用XML来配置，用Shiro来做权限控制相对比较简单而且成熟，而且我一直都把Shiro的session放在mongodb中，这个比较符合mongodb的设计初衷，而且在分布式项目中mongodb也作为一个中间层，用来很好很方便解决分布式环境下的session同步的问题
 　自从SpringBoot问世之后我的项目">
-<meta property="og:updated_time" content="2017-11-10T07:04:53.226Z">
+<meta property="og:updated_time" content="2018-05-26T15:29:16.210Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot集成Shiro并用MongoDB做Session存储">
 <meta name="twitter:description" content="之前项目鉴权一直使用的Shiro，那是在Spring MVC里面使用的比较多，而且都是用XML来配置，用Shiro来做权限控制相对比较简单而且成熟，而且我一直都把Shiro的session放在mongodb中，这个比较符合mongodb的设计初衷，而且在分布式项目中mongodb也作为一个中间层，用来很好很方便解决分布式环境下的session同步的问题
@@ -373,7 +373,7 @@
       
         <p>　之前项目鉴权一直使用的Shiro，那是在Spring MVC里面使用的比较多，而且都是用XML来配置，用Shiro来做权限控制相对比较简单而且成熟，而且我一直都把Shiro的session放在mongodb中，这个比较符合mongodb的设计初衷，而且在分布式项目中mongodb也作为一个中间层，用来很好很方便解决分布式环境下的session同步的问题</p>
 <p>　自从SpringBoot问世之后我的项目基本上能用SpringBoot的就会用SpringBoot，用MAVEN做统一集中管理也很方便，虽然SpringBoot也提供了一套权限安全框架Spring Security，但是相对来说还是不是太好用，所以还是用Shiro来的方便一点，SpringBoot集成Shiro要比Spring MVC要简单的多，至少没有一堆XML配置，看起来更清爽，那么接下来我们就开始集成。</p>
-<p>　第一步必然是在MAVEN中先添加Shiro和mongo的依赖，我用的Shiro版本是</p>
+<p>　第一步必然是在MAVEN中先添加Shiro和mongo的依赖，我用的Shiro版本是<br><a id="more"></a></p>
 <pre><code>&lt;shiro.version&gt;1.2.3&lt;/shiro.version&gt;
 </code></pre><p>　添加依赖：</p>
 <pre><code>&lt;dependency&gt;

@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="前端,easyUI,angularJS," />
+  <meta name="keywords" content="前端,angularJS,easyUI," />
 
 
 
@@ -93,7 +93,7 @@
 <meta property="og:url" content="http://www.tianshangkun.com/2017/04/20/easyUI与angularJS整合（2）：表单提交篇/index.html">
 <meta property="og:site_name" content="天狼武士的Blog">
 <meta property="og:description" content="我们知道easyUI的form表单提供了submit方法，可以直接提交表单的内容至服务器，默认的提交方式是form data,通过表单内元素的name和value作为键值对提交，但是如果你后端用的是springMVC的话，那默认他是无法接收到的，会返回HTTP415的错误，原因是POST提交数据的方法springMVC不接受，这个时候要么你在springMVC的上下文中加入支持form fata">
-<meta property="og:updated_time" content="2017-04-20T10:58:07.979Z">
+<meta property="og:updated_time" content="2018-05-26T15:17:32.484Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="easyUI与angularJS整合（2）：表单提交篇">
 <meta name="twitter:description" content="我们知道easyUI的form表单提供了submit方法，可以直接提交表单的内容至服务器，默认的提交方式是form data,通过表单内元素的name和value作为键值对提交，但是如果你后端用的是springMVC的话，那默认他是无法接收到的，会返回HTTP415的错误，原因是POST提交数据的方法springMVC不接受，这个时候要么你在springMVC的上下文中加入支持form fata">
@@ -370,6 +370,7 @@
       
         <p>　我们知道easyUI的form表单提供了submit方法，可以直接提交表单的内容至服务器，默认的提交方式是form data,通过表单内元素的name和value作为键值对提交，但是如果你后端用的是springMVC的话，那默认他是无法接收到的，会返回HTTP415的错误，原因是POST提交数据的方法springMVC不接受，这个时候要么你在springMVC的上下文中加入支持form fata提交的配置，要么修改表单POST中content-type，都可以解决。</p>
 <p>　在这里我选择的是直接改前端的代码，因为之前一直用的angularJS，数据提交都是用的angularJS的方法，springMVC已经配置过支持application/json的提交方式，所以直接修改content-type为”application/json;charset=UTF-8”的话会更好一点，但是看了easyUI的源码之后就知道，easyUI的form中是没有application/json;charset=UTF-8这种方式提交的，这个时候你就需要扩展easyUI了，顺便可以扩展一下easyUI的form中缺少的获取表单数据的方法（easyUI的form表单没有提供获取表单内数据的方法）。</p>
+<a id="more"></a>
 <p>　具体操作是这样的，我们可以通过$.extend方法对easyUI各种组件进行重写或者扩展，现在我们尝试一下扩展其form组件，增加一个获取表单内数据的方法getObjectData，让这个方法返回我们一个指定表单内的数据，以object类型返回：</p>
 <pre><code>$.extend($.fn.form.methods, {  
 getObjectData:function(jq, options){
@@ -453,9 +454,9 @@ getObjectData:function(jq, options){
           
             <a href="/tags/前端/" rel="tag"># 前端</a>
           
-            <a href="/tags/easyUI/" rel="tag"># easyUI</a>
-          
             <a href="/tags/angularJS/" rel="tag"># angularJS</a>
+          
+            <a href="/tags/easyUI/" rel="tag"># easyUI</a>
           
         </div>
       

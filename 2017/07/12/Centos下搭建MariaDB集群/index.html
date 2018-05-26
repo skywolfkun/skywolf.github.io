@@ -93,7 +93,7 @@
 <meta property="og:url" content="http://www.tianshangkun.com/2017/07/12/Centos下搭建MariaDB集群/index.html">
 <meta property="og:site_name" content="天狼武士的Blog">
 <meta property="og:description" content="最近公司测试库改建，之前测试库上面装的是老的MySql，我顺手就把它换成了MariaDB，后来因为连的人太多就爆了Too Many Connections，本来很简单的事情，就让技术部一小伙子上去把连接数调大了一点，很简单，但是后来我发现他居然直接写在了My.cnf下面，显然他是不知道MariaDB早就从My.cnf下面扩展到了my.cnf.d文件夹下面，于是就跟他一番讲解，然后就引出了配置集群">
-<meta property="og:updated_time" content="2017-07-27T16:08:03.919Z">
+<meta property="og:updated_time" content="2018-05-26T15:16:42.427Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Centos下搭建MariaDB集群">
 <meta name="twitter:description" content="最近公司测试库改建，之前测试库上面装的是老的MySql，我顺手就把它换成了MariaDB，后来因为连的人太多就爆了Too Many Connections，本来很简单的事情，就让技术部一小伙子上去把连接数调大了一点，很简单，但是后来我发现他居然直接写在了My.cnf下面，显然他是不知道MariaDB早就从My.cnf下面扩展到了my.cnf.d文件夹下面，于是就跟他一番讲解，然后就引出了配置集群">
@@ -373,7 +373,8 @@
 <h2 id="第一步、安装MariaDB"><a href="#第一步、安装MariaDB" class="headerlink" title="第一步、安装MariaDB"></a>第一步、安装MariaDB</h2><p>　我们以最小集群来说，两台服务器先做主从配置，然后再做互为主从的配置,两台主机的IP分别为：192.168.70.135，192.168.70.137。</p>
 <p>　先去官网上复制一下源的配置：</p>
 <pre><code>https://downloads.mariadb.org/mariadb/repositories/#mirror=neusoft&amp;distro=CentOS&amp;distro_release=centos7-amd64--centos7&amp;version=10.2
-</code></pre><p>　选择对应的操作系统版本及MariaDB的版本后会给出对应的配置，我这里选择的是Centos7,MariaDB的版本是10.2，所以给出的源是这样的：</p>
+</code></pre><a id="more"></a>
+<p>　选择对应的操作系统版本及MariaDB的版本后会给出对应的配置，我这里选择的是Centos7,MariaDB的版本是10.2，所以给出的源是这样的：</p>
 <pre><code># MariaDB 10.2 CentOS repository list - created 2017-07-12 14:25 UTC
 # http://downloads.mariadb.org/mariadb/repositories/
 [mariadb]

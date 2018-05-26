@@ -96,7 +96,7 @@
 <meta property="og:description" content="随着业务发展需要，数据量的逐步提升，需要用到Hadoop来处理一些数据，所以搭建一个Hadoop集群，搭建Hadoop集群需要多台主机，但是由于资源有限，所以刚好可以利用近些年比较火的docker来搭建，用docker搭建也有一个好处，就是一次构建多节点重复利用。在上服务器之前，现在自己的电脑里用虚拟机模拟一下，顺便可以做个记录，把可能遇到的坑先趟过去（谁叫我笔记本16G内存呢）。
 第一步、安装">
 <meta property="og:image" content="http://www.tianshangkun.com/images/hadoop.png">
-<meta property="og:updated_time" content="2017-06-13T16:40:46.944Z">
+<meta property="og:updated_time" content="2018-05-26T15:16:29.752Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Centos下docker搭建Hadoop集群">
 <meta name="twitter:description" content="随着业务发展需要，数据量的逐步提升，需要用到Hadoop来处理一些数据，所以搭建一个Hadoop集群，搭建Hadoop集群需要多台主机，但是由于资源有限，所以刚好可以利用近些年比较火的docker来搭建，用docker搭建也有一个好处，就是一次构建多节点重复利用。在上服务器之前，现在自己的电脑里用虚拟机模拟一下，顺便可以做个记录，把可能遇到的坑先趟过去（谁叫我笔记本16G内存呢）。
@@ -379,7 +379,8 @@
 <pre><code>mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 
 wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
-</code></pre><p>　安装完之后记得 yum makecache一下。由于是Minimal版，连最基本的网络工具都没有，所以全都开始手动安装：</p>
+</code></pre><a id="more"></a>
+<p>　安装完之后记得 yum makecache一下。由于是Minimal版，连最基本的网络工具都没有，所以全都开始手动安装：</p>
 <pre><code>yum install -y wget
 yum install -y gcc
 </code></pre><p>　安装基本工具之后就是安装docker,docker安装很简单直接yum install -y docker，docker基本配置和使用就不再赘述了，docker的镜像本身下载很慢的，所以这里我用的是daocloud的加速器，那下载速度杠杠的！但是不知道daocloud最近怎么了，curl生成的加速器是有问题的，配置了之后docker启动不了，看了日志发现是他们修改的etc/docker/daemon.json有问题，里面多了一个逗号，把逗号去了就行。 接下来就是启动docker</p>

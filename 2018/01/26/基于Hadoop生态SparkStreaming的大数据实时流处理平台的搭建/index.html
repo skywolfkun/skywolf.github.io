@@ -95,7 +95,7 @@
 <meta property="og:description" content="随着公司业务发展，对大数据的获取和实时处理的要求就会越来越高，日志处理、用户行为分析、场景业务分析等等，传统的写日志方式根本满足不了业务的实时处理需求，所以本人准备开始着手改造原系统中的数据处理方式，重新搭建一个实时流处理平台，主要是基于Hadoop生态，利用Kafka作为中转，SparkStreaming框架实时获取数据并清洗，将结果多维度的存储进HBase数据库。　整个平台大致的框架如下：">
 <meta property="og:image" content="http://www.tianshangkun.com/images/streaming.png">
 <meta property="og:image" content="http://www.tianshangkun.com/images/hbaseInHadoop.png">
-<meta property="og:updated_time" content="2018-05-16T08:21:42.681Z">
+<meta property="og:updated_time" content="2018-05-26T15:19:47.485Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于Hadoop生态SparkStreaming的大数据实时流处理平台的搭建">
 <meta name="twitter:description" content="随着公司业务发展，对大数据的获取和实时处理的要求就会越来越高，日志处理、用户行为分析、场景业务分析等等，传统的写日志方式根本满足不了业务的实时处理需求，所以本人准备开始着手改造原系统中的数据处理方式，重新搭建一个实时流处理平台，主要是基于Hadoop生态，利用Kafka作为中转，SparkStreaming框架实时获取数据并清洗，将结果多维度的存储进HBase数据库。　整个平台大致的框架如下：">
@@ -377,7 +377,8 @@
 <pre><code>vim /etc/profile
 </code></pre><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=<span class="regexp">/usr/java</span><span class="regexp">/jdk1.8.0_144</span><br><span class="line">export PATH=$JAVA_HOME/bin</span>:$PATH</span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/<span class="class"><span class="keyword">lib</span>/<span class="title">dt</span>.<span class="title">jar</span>:$<span class="title">JAVA_HOME</span>/<span class="title">lib</span>/<span class="title">tools</span>.<span class="title">jar</span></span></span><br><span class="line">export SCALA_HOME=<span class="regexp">/usr/local</span><span class="regexp">/scala-2.11.12</span><br><span class="line">export PATH=$PATH:$SCALA_HOME/bin</span></span><br></pre></td></tr></table></figure>
 <pre><code>source /etc/profile
-</code></pre><h2 id="二、配置zookeeper、maven环境"><a href="#二、配置zookeeper、maven环境" class="headerlink" title="二、配置zookeeper、maven环境"></a>二、配置zookeeper、maven环境</h2><p>　下载并解压zookeeper以及maven并配置profile文件</p>
+</code></pre><a id="more"></a>
+<h2 id="二、配置zookeeper、maven环境"><a href="#二、配置zookeeper、maven环境" class="headerlink" title="二、配置zookeeper、maven环境"></a>二、配置zookeeper、maven环境</h2><p>　下载并解压zookeeper以及maven并配置profile文件</p>
 <pre><code>wget http://mirrors.hust.edu.cn/apache/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz
 tar -zxvf apache-maven-3.5.2-bin.tar.gz -C /usr/local
 wget http://mirrors.hust.edu.cn/apache/zookeeper/zookeeper-3.4.11/zookeeper-3.4.11.tar.gz
